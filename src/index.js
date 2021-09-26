@@ -10,11 +10,6 @@ function elementBuilder (elType, className, parent) {
 
 const body = document.querySelector("body");
 
-const headContainer = elementBuilder("div", "head-container", body);
-
-const head = elementBuilder("h1", "head", headContainer);
-head.textContent = "WeatherApp";
-
 function priorElementCheck() {
   let weatherContainer = document.getElementsByClassName("weather-container")[0];
   if (weatherContainer) {
@@ -101,24 +96,33 @@ const weather = async (term) => {
   weatherElements(newWeather);
 };
 
-function searchWeather() {
-  let term = searchBar.value;
-  weather(term);
-};
 
-const searchContainer = elementBuilder("div", "search-container", headContainer);
+const searchElements = (() => {
+  const headContainer = elementBuilder("div", "head-container", body);
 
-const searchBar = elementBuilder("input", "search", searchContainer);
-searchBar.setAttribute("type", "text");
-searchBar.setAttribute("placeholder", "Search...");
+  const head = elementBuilder("h1", "head", headContainer);
+  head.textContent = "WeatherApp";
 
-const button = elementBuilder("button", "search-button", searchContainer)
-button.textContent = "Search";
+  const searchContainer = elementBuilder("div", "search-container", headContainer);
 
-button.addEventListener("click", searchWeather);
+  const searchBar = elementBuilder("input", "search", searchContainer);
+  searchBar.setAttribute("type", "text");
+  searchBar.setAttribute("placeholder", "Search City...");
 
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    searchWeather();
+  const button = elementBuilder("button", "search-button", searchContainer)
+  button.textContent = "Search";
+
+  button.addEventListener("click", searchWeather);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      searchWeather();
+    };
+  }, false);
+
+  function searchWeather() {
+    let term = searchBar.value;
+    weather(term);
   };
-}, false);
+})();
+
