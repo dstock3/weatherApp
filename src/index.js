@@ -19,8 +19,10 @@ const weather = async (term) => {
   const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
   const weatherData = await response.json();
+
   for (const prop in weatherData) {
-    console.log(`${prop}: ${weatherData[prop]}`);
+    let weatherElement = elementBuilder("p", "weather-info", body);
+    weatherElement.textContent = `${prop}: ${weatherData[prop]}`
   };
 };
 
