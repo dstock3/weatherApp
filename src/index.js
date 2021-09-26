@@ -30,7 +30,7 @@ const process = (data) => {
       let tempInfo = data[prop];
       for (let prop in tempInfo) {
         if (prop === "temp") {
-          const temp = tempInfo[prop];
+          let temp = tempInfo[prop];
           weatherObj.temp = temp;
         };
       };
@@ -45,7 +45,7 @@ const process = (data) => {
           let newWeather = weatherInfo[prop];
           for (let newProp in newWeather) {
             if (newProp === "main") {
-              const info = newWeather[newProp];
+              let info = newWeather[newProp];
               weatherObj.info = info;
             };
           };
@@ -62,7 +62,7 @@ const process = (data) => {
           let newWeather = weatherInfo[prop];
           for (let newProp in newWeather) {
             if (newProp === "description") {
-              const desc = newWeather[newProp];
+              let desc = newWeather[newProp];
               weatherObj.desc = desc;
             };
           };
@@ -71,7 +71,11 @@ const process = (data) => {
     };
   })();
 
-  return { weatherObj }
+  let temp = weatherObj.temp;
+  let info = weatherObj.info;
+  let desc = weatherObj.desc;
+
+  return { temp, info, desc  }
 };
 
 const weatherElements = (weatherData) => {
@@ -93,7 +97,6 @@ const weather = async (term) => {
 
   const data = await response.json();
   let newWeather = process(data);
-  console.log(newWeather)
   weatherElements(newWeather);
 };
 
