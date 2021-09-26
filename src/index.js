@@ -27,18 +27,15 @@ function priorElementCheck() {
   if (weatherContainer) {
     weatherContainer.remove();
   };
-}
-
+};
 
 const process = (data) => {
-
   for (let prop in data) {
     if (prop === "main") {
       let tempInfo = data[prop];
       for (let prop in tempInfo) {
         if (prop === "temp") {
-          let tempElement = elementBuilder("p", "temp", weatherContainer);
-          tempElement.textContent = `${(tempInfo[prop])}`;
+          let temp = tempInfo[prop];
         };
       };
     };
@@ -48,18 +45,39 @@ const process = (data) => {
         let newWeather = weatherInfo[prop];
         for (let newProp in newWeather) {
           if (newProp === "main") {
-            let weatherElement = elementBuilder("p", "main", weatherContainer);
-            weatherElement.textContent = `${(newWeather[newProp])}`;
+            let info = newWeather[newProp];
           };
           if (newProp === "description") {
-            let weatherElement = elementBuilder("p", "description", weatherContainer);
-            weatherElement.textContent = `${(newWeather[newProp])}`;weatherContainer
+            let desc = newWeather[newProp];
           };
         };
       };
     };
+    return { temp, info, desc }
   };
-}
+};
+
+const weatherElements = (weatherData) => {
+  priorElementCheck();
+  weatherContainer = elementBuilder("div", "weather-container", body);
+
+  let tempElement = elementBuilder("p", "temp", weatherContainer);
+  tempElement.textContent = `${weatherData.temp}`;
+
+  let weatherElement = elementBuilder("p", "main", weatherContainer);
+  weatherElement.textContent = `${weatherData.info}`;
+
+  let weatherElement = elementBuilder("p", "description", weatherContainer);
+  weatherElement.textContent = `${weatherData.desc}`;
+};
+
+function searchWeather() {
+  let term = searchBar.value;
+  let data = weather(term);
+  let newWeather = process(data);
+  weatherElements(newWeather);
+
+};
 
 const searchContainer = elementBuilder("div", "search-container", headContainer);
 
@@ -70,16 +88,6 @@ searchBar.setAttribute("placeholder", "Search...");
 const button = elementBuilder("button", "search-button", searchContainer)
 button.textContent = "Search";
 
-const searchWeather = () => {
-    let term = searchBar.value;
-    let data = weather(term);
-    priorElementCheck();
-    
-
-};
-
-//weatherContainer = elementBuilder("div", "weather-container", body);
-
 button.addEventListener("click", searchWeather);
 
 document.addEventListener('keydown', (event) => {
@@ -87,4 +95,3 @@ document.addEventListener('keydown', (event) => {
     searchWeather();
   };
 }, false);
-
