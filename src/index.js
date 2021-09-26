@@ -22,10 +22,19 @@ const weather = async (term) => {
 
   for (let prop in data) {
     if (prop === "weather") {
-      let weatherElement = elementBuilder("p", "weather-info", body);
       let weatherInfo = data[prop];
       for (let prop in weatherInfo) {
-        weatherElement.textContent = JSON.stringify(weatherInfo[prop]);
+        let newWeather = weatherInfo[prop];
+        for (let newProp in newWeather) {
+          if (newProp === "main") {
+            let weatherElement = elementBuilder("p", "main", body);
+            weatherElement.textContent = `${(newWeather[newProp])}`;
+          };
+          if (newProp === "description") {
+            let weatherElement = elementBuilder("p", "description", body);
+            weatherElement.textContent = `${(newWeather[newProp])}`;
+          };
+        };
       };
     };
   };
