@@ -93,12 +93,22 @@ const errCheck = (error) => {
 
   let errElement = elementBuilder("p", "error", errContainer);
   errElement.textContent = `Error: ${error}`;
-}
+};
+
+function zipCheck(term) {
+  let zip = parseInt(term);
+  if (Number.isInteger(zip)) {
+    let zipTerm = `?zip=${zip},us`;
+    return zipTerm
+  } else { return term };
+};
 
 const weather = async (term) => {
+  let checkedTerm = zipCheck(term);
+  console.log(checkedTerm);
   let unit = `&units=imperial`;
   try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
     const data = await response.json();
     let newWeather = process(data);
