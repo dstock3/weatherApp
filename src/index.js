@@ -23,15 +23,16 @@ const weather = async (term) => {
   for (let prop in data) {
     if (prop === "weather") {
       let weatherInfo = data[prop];
+      const weatherContainer = elementBuilder("div", "weather-container", body);
       for (let prop in weatherInfo) {
         let newWeather = weatherInfo[prop];
         for (let newProp in newWeather) {
           if (newProp === "main") {
-            let weatherElement = elementBuilder("p", "main", body);
+            let weatherElement = elementBuilder("p", "main", weatherContainer);
             weatherElement.textContent = `${(newWeather[newProp])}`;
           };
           if (newProp === "description") {
-            let weatherElement = elementBuilder("p", "description", body);
+            let weatherElement = elementBuilder("p", "description", weatherContainer);
             weatherElement.textContent = `${(newWeather[newProp])}`;
           };
         };
