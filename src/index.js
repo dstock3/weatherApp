@@ -83,13 +83,13 @@ const weatherElements = (weatherData) => {
   let weatherContainer = elementBuilder("div", "weather-container", body);
 
   let tempElement = elementBuilder("p", "temp", weatherContainer);
-  tempElement.textContent = `${weatherData.temp}`;
+  tempElement.textContent = `Temperature: ${weatherData.temp}`;
 
   let weatherInfo = elementBuilder("p", "main", weatherContainer);
-  weatherInfo.textContent = `${weatherData.info}`;
+  weatherInfo.textContent = `Info: ${weatherData.info}`;
 
   let weatherDesc = elementBuilder("p", "description", weatherContainer);
-  weatherDesc.textContent = `${weatherData.desc}`;
+  weatherDesc.textContent = `Description: ${weatherData.desc}`;
 };
 
 const weather = async (term) => {
