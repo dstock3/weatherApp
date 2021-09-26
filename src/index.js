@@ -36,3 +36,9 @@ const searchWeather = () => {
 };
 
 button.addEventListener("click", searchWeather);
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    searchWeather();
+  };
+}, false);
