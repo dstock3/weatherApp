@@ -9,8 +9,11 @@ function elementBuilder (elType, className, parent) {
 };
 
 const body = document.querySelector("body");
-const head = elementBuilder("h1", "head", body);
-head.textContent = "WeatherApp"
+
+const searchContainer = elementBuilder("div", "search-container", body);
+
+const head = elementBuilder("h1", "head", searchContainer);
+head.textContent = "WeatherApp";
 
 const weather = async (term) => {
   const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
@@ -21,11 +24,11 @@ const weather = async (term) => {
   };
 };
 
-const searchBar = elementBuilder("input", "search", body);
+const searchBar = elementBuilder("input", "search", searchContainer);
 searchBar.setAttribute("type", "text");
 searchBar.setAttribute("placeholder", "Search...");
 
-const button = elementBuilder("button", "search-button", body)
+const button = elementBuilder("button", "search-button", searchContainer)
 button.textContent = "Search";
 
 const searchWeather = () => {
