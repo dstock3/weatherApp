@@ -87,15 +87,28 @@ const weatherElements = (weatherData) => {
   weatherDesc.textContent = `Description: ${weatherData.desc}`;
 };
 
+const errCheck = (error) => {
+  priorElementCheck();
+  let errContainer = elementBuilder("div", "weather-container", body);
+
+  let errElement = elementBuilder("p", "error", errContainer);
+  errElement.textContent = `Error: ${error}`;
+}
+
 const weather = async (term) => {
   let unit = `&units=imperial`;
-  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+  try {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
-  const data = await response.json();
-  let newWeather = process(data);
-  weatherElements(newWeather);
+    const data = await response.json();
+    let newWeather = process(data);
+    if (newWeather.temp !== undefined) {
+      weatherElements(newWeather);
+    } else { errCheck(`That search term was not identified. Please enter a city name.`); }
+  } catch (error) {
+    errCheck(error);
+  };
 };
-
 
 const searchElements = (() => {
   const headContainer = elementBuilder("div", "head-container", body);
