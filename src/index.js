@@ -18,11 +18,16 @@ head.textContent = "WeatherApp";
 const weather = async (term) => {
   const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
-  const weatherData = await response.json();
+  const data = await response.json();
 
-  for (const prop in weatherData) {
-    let weatherElement = elementBuilder("p", "weather-info", body);
-    weatherElement.textContent = `${prop}: ${weatherData[prop]}`
+  for (let prop in data) {
+    if (prop === "weather") {
+      let weatherElement = elementBuilder("p", "weather-info", body);
+      let weatherInfo = data[prop];
+      for (let prop in weatherInfo) {
+        weatherElement.textContent = JSON.stringify(weatherInfo[prop]);
+      };
+    };
   };
 };
 
