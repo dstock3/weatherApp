@@ -15,13 +15,6 @@ const headContainer = elementBuilder("div", "head-container", body);
 const head = elementBuilder("h1", "head", headContainer);
 head.textContent = "WeatherApp";
 
-const weather = async (term) => {
-  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
-
-  const data = await response.json();
-  return data
-};
-
 function priorElementCheck() {
   let weatherContainer = document.getElementsByClassName("weather-container")[0];
   if (weatherContainer) {
@@ -30,53 +23,83 @@ function priorElementCheck() {
 };
 
 const process = (data) => {
-  for (let prop in data) {
-    if (prop === "main") {
+  let weatherObj = new Object();
+
+  const getTemp = (() => {
+    for (let prop in data) {
       let tempInfo = data[prop];
       for (let prop in tempInfo) {
         if (prop === "temp") {
-          let temp = tempInfo[prop];
+          const temp = tempInfo[prop];
+          weatherObj.temp = temp;
+        };
+      };
+    }
+  })();
+
+  const getWeather = (() => {
+    for (let prop in data) {
+      if (prop === "weather") {
+        let weatherInfo = data[prop];
+        for (let prop in weatherInfo) {
+          let newWeather = weatherInfo[prop];
+          for (let newProp in newWeather) {
+            if (newProp === "main") {
+              const info = newWeather[newProp];
+              weatherObj.info = info;
+            };
+          };
         };
       };
     };
-    if (prop === "weather") {
-      let weatherInfo = data[prop];
-      for (let prop in weatherInfo) {
-        let newWeather = weatherInfo[prop];
-        for (let newProp in newWeather) {
-          if (newProp === "main") {
-            let info = newWeather[newProp];
-          };
-          if (newProp === "description") {
-            let desc = newWeather[newProp];
+  })();
+
+  const getDesc = (() => {
+    for (let prop in data) {
+      if (prop === "weather") {
+        let weatherInfo = data[prop];
+        for (let prop in weatherInfo) {
+          let newWeather = weatherInfo[prop];
+          for (let newProp in newWeather) {
+            if (newProp === "description") {
+              const desc = newWeather[newProp];
+              weatherObj.desc = desc;
+            };
           };
         };
       };
     };
-    return { temp, info, desc }
-  };
+  })();
+
+  return { weatherObj }
 };
 
 const weatherElements = (weatherData) => {
   priorElementCheck();
-  weatherContainer = elementBuilder("div", "weather-container", body);
+  let weatherContainer = elementBuilder("div", "weather-container", body);
 
   let tempElement = elementBuilder("p", "temp", weatherContainer);
   tempElement.textContent = `${weatherData.temp}`;
 
-  let weatherElement = elementBuilder("p", "main", weatherContainer);
-  weatherElement.textContent = `${weatherData.info}`;
+  let weatherInfo = elementBuilder("p", "main", weatherContainer);
+  weatherInfo.textContent = `${weatherData.info}`;
 
-  let weatherElement = elementBuilder("p", "description", weatherContainer);
-  weatherElement.textContent = `${weatherData.desc}`;
+  let weatherDesc = elementBuilder("p", "description", weatherContainer);
+  weatherDesc.textContent = `${weatherData.desc}`;
+};
+
+const weather = async (term) => {
+  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+
+  const data = await response.json();
+  let newWeather = process(data);
+  console.log(newWeather)
+  weatherElements(newWeather);
 };
 
 function searchWeather() {
   let term = searchBar.value;
-  let data = weather(term);
-  let newWeather = process(data);
-  weatherElements(newWeather);
-
+  weather(term);
 };
 
 const searchContainer = elementBuilder("div", "search-container", headContainer);
