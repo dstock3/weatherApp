@@ -19,12 +19,19 @@ const weather = async (term) => {
   const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
   const data = await response.json();
+  return data
+};
 
+function priorElementCheck() {
   let weatherContainer = document.getElementsByClassName("weather-container")[0];
   if (weatherContainer) {
     weatherContainer.remove();
   };
-  weatherContainer = elementBuilder("div", "weather-container", body);
+}
+
+
+const process = (data) => {
+
   for (let prop in data) {
     if (prop === "main") {
       let tempInfo = data[prop];
@@ -52,7 +59,7 @@ const weather = async (term) => {
       };
     };
   };
-};
+}
 
 const searchContainer = elementBuilder("div", "search-container", headContainer);
 
@@ -65,8 +72,13 @@ button.textContent = "Search";
 
 const searchWeather = () => {
     let term = searchBar.value;
-    weather(term);
+    let data = weather(term);
+    priorElementCheck();
+    
+
 };
+
+//weatherContainer = elementBuilder("div", "weather-container", body);
 
 button.addEventListener("click", searchWeather);
 
