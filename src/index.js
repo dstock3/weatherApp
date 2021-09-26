@@ -10,9 +10,9 @@ function elementBuilder (elType, className, parent) {
 
 const body = document.querySelector("body");
 
-const searchContainer = elementBuilder("div", "search-container", body);
+const headContainer = elementBuilder("div", "head-container", body);
 
-const head = elementBuilder("h1", "head", searchContainer);
+const head = elementBuilder("h1", "head", headContainer);
 head.textContent = "WeatherApp";
 
 const weather = async (term) => {
@@ -23,6 +23,8 @@ const weather = async (term) => {
     console.log(`${prop}: ${weatherData[prop]}`);
   };
 };
+
+const searchContainer = elementBuilder("div", "search-container", headContainer);
 
 const searchBar = elementBuilder("input", "search", searchContainer);
 searchBar.setAttribute("type", "text");

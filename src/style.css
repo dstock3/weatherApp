@@ -1,0 +1,13 @@
+.head-container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    border: solid 3px black;
+    padding: 3%;
+}
+
+.search-container {
+    display: flex;
+}
+
