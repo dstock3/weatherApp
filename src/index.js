@@ -10,11 +10,6 @@ function elementBuilder (elType, className, parent) {
 
 const body = document.querySelector("body");
 
-const headContainer = elementBuilder("div", "head-container", body);
-
-const head = elementBuilder("h1", "head", headContainer);
-head.textContent = "WeatherApp";
-
 function priorElementCheck() {
   let weatherContainer = document.getElementsByClassName("weather-container")[0];
   if (weatherContainer) {
@@ -92,32 +87,55 @@ const weatherElements = (weatherData) => {
   weatherDesc.textContent = `Description: ${weatherData.desc}`;
 };
 
+const errCheck = (error) => {
+  priorElementCheck();
+  let errContainer = elementBuilder("div", "weather-container", body);
+
+  let errElement = elementBuilder("p", "error", errContainer);
+  errElement.textContent = `Error: ${error}`;
+}
+
 const weather = async (term) => {
-  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+  let unit = `&units=imperial`;
+  try {
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
-  const data = await response.json();
-  let newWeather = process(data);
-  weatherElements(newWeather);
-};
-
-function searchWeather() {
-  let term = searchBar.value;
-  weather(term);
-};
-
-const searchContainer = elementBuilder("div", "search-container", headContainer);
-
-const searchBar = elementBuilder("input", "search", searchContainer);
-searchBar.setAttribute("type", "text");
-searchBar.setAttribute("placeholder", "Search...");
-
-const button = elementBuilder("button", "search-button", searchContainer)
-button.textContent = "Search";
-
-button.addEventListener("click", searchWeather);
-
-document.addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    searchWeather();
+    const data = await response.json();
+    let newWeather = process(data);
+    if (newWeather.temp !== undefined) {
+      weatherElements(newWeather);
+    } else { errCheck(`That search term was not identified. Please enter a city name.`); }
+  } catch (error) {
+    errCheck(error);
   };
-}, false);
+};
+
+const searchElements = (() => {
+  const headContainer = elementBuilder("div", "head-container", body);
+
+  const head = elementBuilder("h1", "head", headContainer);
+  head.textContent = "WeatherApp";
+
+  const searchContainer = elementBuilder("div", "search-container", headContainer);
+
+  const searchBar = elementBuilder("input", "search", searchContainer);
+  searchBar.setAttribute("type", "text");
+  searchBar.setAttribute("placeholder", "Search City...");
+
+  const button = elementBuilder("button", "search-button", searchContainer)
+  button.textContent = "Search";
+
+  button.addEventListener("click", searchWeather);
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+      searchWeather();
+    };
+  }, false);
+
+  function searchWeather() {
+    let term = searchBar.value;
+    weather(term);
+  };
+})();
+
