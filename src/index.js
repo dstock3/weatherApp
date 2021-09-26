@@ -20,6 +20,11 @@ const weather = async (term) => {
 
   const data = await response.json();
 
+  let weatherContainer = document.getElementsByClassName("weather-container")[0];
+  if (weatherContainer) {
+    weatherContainer.remove();
+  };
+  
   for (let prop in data) {
     if (prop === "weather") {
       let weatherInfo = data[prop];
@@ -33,7 +38,7 @@ const weather = async (term) => {
           };
           if (newProp === "description") {
             let weatherElement = elementBuilder("p", "description", weatherContainer);
-            weatherElement.textContent = `${(newWeather[newProp])}`;
+            weatherElement.textContent = `${(newWeather[newProp])}`;weatherContainer
           };
         };
       };
