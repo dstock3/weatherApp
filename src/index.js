@@ -93,7 +93,8 @@ const weatherElements = (weatherData) => {
 };
 
 const weather = async (term) => {
-  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+  let unit = `&units=imperial`;
+  const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${term + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
   const data = await response.json();
   let newWeather = process(data);
