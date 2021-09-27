@@ -1,5 +1,11 @@
 import _ from 'lodash';
 import './style.css';
+import 'reset-css';
+
+const head = document.getElementsByTagName("head")[0];
+const meta = elementBuilder("meta", "meta-tag", head);
+meta.setAttribute("name", "viewport");
+meta.setAttribute("content", "width=device-width, initial-scale=1");
 
 function elementBuilder (elType, className, parent) {
   const newElement = document.createElement(elType);
@@ -77,14 +83,20 @@ const weatherElements = (weatherData) => {
   priorElementCheck();
   let weatherContainer = elementBuilder("div", "weather-container", body);
 
-  let tempElement = elementBuilder("p", "temp", weatherContainer);
+  let infoContainer = elementBuilder("div", "info-container", weatherContainer);
+
+  let tempElement = elementBuilder("p", "temp", infoContainer);
   tempElement.textContent = `Temperature: ${weatherData.temp}`;
 
-  let weatherInfo = elementBuilder("p", "main", weatherContainer);
+  let weatherInfo = elementBuilder("p", "main", infoContainer);
   weatherInfo.textContent = `Info: ${weatherData.info}`;
 
-  let weatherDesc = elementBuilder("p", "description", weatherContainer);
+  let weatherDesc = elementBuilder("p", "description", infoContainer);
   weatherDesc.textContent = `Description: ${weatherData.desc}`;
+
+  let imgContainer = elementBuilder("div", "img-container", weatherContainer);
+  let weatherImg = elementBuilder("img", "weather-img", imgContainer);
+  weatherImg.src = `http://via.placeholder.com/100x100`
 };
 
 const errCheck = (error) => {
@@ -124,8 +136,8 @@ const weather = async (term) => {
 const searchElements = (() => {
   const headContainer = elementBuilder("div", "head-container", body);
 
-  const head = elementBuilder("h1", "head", headContainer);
-  head.textContent = "WeatherApp";
+  const header = elementBuilder("h1", "head", headContainer);
+  header.textContent = "WeatherApp";
 
   const searchContainer = elementBuilder("div", "search-container", headContainer);
 

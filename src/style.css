@@ -1,5 +1,18 @@
+body {
+    font-size: 1.2em;
+    background-color: #caeafa;
+}
+
+.head {
+    font-size: 2.25em;
+    padding-bottom: 5%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-decoration: underline;
+}
+
 .head-container {
     margin: auto;
+    margin-top: 1%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -17,13 +30,32 @@
 
 .weather-container {
     margin: auto;
+    margin-top: 1%;
     display: flex;
-    flex-direction: column;
     align-items: center;
+    justify-content: space-around;
     border: solid 2px black;
     padding: 3%;
     background-color: #03a9fc;
     border-radius: 5px;
     width: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 1em;
+    }
+
+    .head {
+        font-size: 1.75em;
+    }
+
+    .head-container {
+        width: 85%;
+    }
+
+    .weather-container {
+        width: 85%;
+    }
 }
 
