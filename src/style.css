@@ -56,6 +56,12 @@ body {
     padding-bottom: 7%;
 }
 
+.temp {
+    font-weight: bold;
+    font-size: 2.75em;
+    padding: 1.5%;
+}
+
 .forecast {
     width: 85%;
 }

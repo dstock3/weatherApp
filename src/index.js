@@ -117,10 +117,10 @@ const weatherElements = (weatherData) => {
   cityName.textContent = `${weatherData.name}`;
 
   let tempElement = elementBuilder("p", "temp", infoContainer);
-  tempElement.textContent = `Temperature: ${weatherData.temp}`;
+  tempElement.textContent = `${weatherData.temp}°`;
 
   let forecast = elementBuilder("p", "forecast", infoContainer);
-  forecast.textContent = `The forecast for today is ${weatherData.info} with a high of ${weatherData.high} and a low of ${weatherData.low}.`
+  forecast.textContent = `The forecast for today is ${weatherData.info} with a high of ${weatherData.high}° and a low of ${weatherData.low}°.`
 
   let imgContainer = elementBuilder("div", "img-container", weatherContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
