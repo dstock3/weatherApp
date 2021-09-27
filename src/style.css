@@ -1,3 +1,7 @@
+body {
+    font-size: 1.2em;
+}
+
 .head-container {
     margin: auto;
     display: flex;
@@ -25,5 +29,20 @@
     background-color: #03a9fc;
     border-radius: 5px;
     width: 300px;
+}
+
+@media only screen and (max-width: 600px) {
+    body {
+        font-size: 1em;
+    }
+
+    .head-container {
+        width: 98%;
+    }
+
+    .weather-container {
+        width: 100%;
+    }
+
 }
 
