@@ -54,6 +54,14 @@ const process = (data) => {
     }
   })();
 
+  function infoProcessor(info) {
+    let newInfo = info.charAt(0).toLowerCase() + info.slice(1);
+    if (newInfo === "clouds") {
+      newInfo = "cloudy"
+    };
+    return newInfo
+  };
+
   const getWeather = (() => {
     for (let prop in data) {
       if (prop === "weather") {
@@ -63,7 +71,8 @@ const process = (data) => {
           for (let newProp in newWeather) {
             if (newProp === "main") {
               let info = newWeather[newProp];
-              weatherObj.info = info;
+              let newInfo = infoProcessor(info);
+              weatherObj.info = newInfo;
             };
           };
         };
