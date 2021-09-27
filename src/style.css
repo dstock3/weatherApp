@@ -56,6 +56,10 @@ body {
     padding-bottom: 7%;
 }
 
+.forecast {
+    width: 85%;
+}
+
 @media only screen and (max-width: 600px) {
     body {
         font-size: 1em;
