@@ -124,7 +124,7 @@ const weatherElements = (weatherData) => {
 
   let imgContainer = elementBuilder("div", "img-container", weatherContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
-  weatherImg.src = `http://via.placeholder.com/100x100`
+  weatherImg.src = `http://via.placeholder.com/100x100`;
 };
 
 const errCheck = (error) => {
@@ -156,7 +156,7 @@ const weather = async (term) => {
     let newWeather = process(data);
     if (newWeather.temp !== undefined) {
       weatherElements(newWeather);
-    } else { errCheck(`That search term was not identified. Please enter a city name.`); }
+    } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); }
   } catch (error) {
     errCheck(error);
   };
