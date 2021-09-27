@@ -77,14 +77,20 @@ const weatherElements = (weatherData) => {
   priorElementCheck();
   let weatherContainer = elementBuilder("div", "weather-container", body);
 
-  let tempElement = elementBuilder("p", "temp", weatherContainer);
+  let infoContainer = elementBuilder("div", "info-container", weatherContainer);
+
+  let tempElement = elementBuilder("p", "temp", infoContainer);
   tempElement.textContent = `Temperature: ${weatherData.temp}`;
 
-  let weatherInfo = elementBuilder("p", "main", weatherContainer);
+  let weatherInfo = elementBuilder("p", "main", infoContainer);
   weatherInfo.textContent = `Info: ${weatherData.info}`;
 
-  let weatherDesc = elementBuilder("p", "description", weatherContainer);
+  let weatherDesc = elementBuilder("p", "description", infoContainer);
   weatherDesc.textContent = `Description: ${weatherData.desc}`;
+
+  let imgContainer = elementBuilder("div", "img-container", weatherContainer);
+  let weatherImg = elementBuilder("img", "weather-img", imgContainer);
+  weatherImg.src = `http://via.placeholder.com/100x100`
 };
 
 const errCheck = (error) => {
