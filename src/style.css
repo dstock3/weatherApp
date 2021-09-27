@@ -62,10 +62,12 @@ body {
 
     .head-container {
         width: 85%;
+        padding: 5%;
     }
 
     .weather-container {
         width: 85%;
+        padding: 5%;
     }
 }
 
