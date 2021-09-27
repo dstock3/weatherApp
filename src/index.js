@@ -98,17 +98,18 @@ const errCheck = (error) => {
 function zipCheck(term) {
   let zip = parseInt(term);
   if (Number.isInteger(zip)) {
-    let zipTerm = `?zip=${zip},us`;
+    let zipTerm = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us`;
     return zipTerm
-  } else { return term };
+  } else {
+    return `https://api.openweathermap.org/data/2.5/weather?q=${term}` 
+  };
 };
 
 const weather = async (term) => {
   let checkedTerm = zipCheck(term);
-  console.log(checkedTerm);
   let unit = `&units=imperial`;
   try {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+    const response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
     const data = await response.json();
     let newWeather = process(data);
@@ -130,7 +131,7 @@ const searchElements = (() => {
 
   const searchBar = elementBuilder("input", "search", searchContainer);
   searchBar.setAttribute("type", "text");
-  searchBar.setAttribute("placeholder", "Search City...");
+  searchBar.setAttribute("placeholder", "Search City or Zip Code...");
 
   const button = elementBuilder("button", "search-button", searchContainer)
   button.textContent = "Search";
