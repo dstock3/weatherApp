@@ -1,5 +1,11 @@
 import _ from 'lodash';
 import './style.css';
+import 'reset-css';
+
+const head = document.getElementsByTagName("head")[0];
+const meta = elementBuilder("meta", "meta-tag", head);
+meta.setAttribute("name", "viewport");
+meta.setAttribute("content", "width=device-width, initial-scale=1");
 
 function elementBuilder (elType, className, parent) {
   const newElement = document.createElement(elType);
@@ -130,8 +136,8 @@ const weather = async (term) => {
 const searchElements = (() => {
   const headContainer = elementBuilder("div", "head-container", body);
 
-  const head = elementBuilder("h1", "head", headContainer);
-  head.textContent = "WeatherApp";
+  const header = elementBuilder("h1", "head", headContainer);
+  header.textContent = "WeatherApp";
 
   const searchContainer = elementBuilder("div", "search-container", headContainer);
 
