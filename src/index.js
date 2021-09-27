@@ -40,15 +40,15 @@ const process = (data) => {
       for (let prop in tempInfo) {
         if (prop === "temp") {
           let temp = tempInfo[prop];
-          weatherObj.temp = temp;
+          weatherObj.temp = Math.round(temp);
         };
         if (prop === "temp_max") {
           let temp = tempInfo[prop];
-          weatherObj.high = temp;
+          weatherObj.high = Math.round(temp);
         };
         if (prop === "temp_min") {
           let temp = tempInfo[prop];
-          weatherObj.low = temp;
+          weatherObj.low = Math.round(temp);
         }
       };
     }
@@ -115,6 +115,9 @@ const weatherElements = (weatherData) => {
 
   let weatherDesc = elementBuilder("p", "description", infoContainer);
   weatherDesc.textContent = `Description: ${weatherData.desc}`;
+
+  let forecast = elementBuilder("p", "forecast", weatherContainer);
+  forecast.textContent = `The forecast for today is ${weatherData.info} with a high of ${weatherData.high} and a low of ${weatherData.low}.`
 
   let imgContainer = elementBuilder("div", "img-container", weatherContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
