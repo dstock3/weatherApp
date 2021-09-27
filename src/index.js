@@ -156,7 +156,7 @@ const weather = async (term) => {
     let newWeather = process(data);
     if (newWeather.temp !== undefined) {
       weatherElements(newWeather);
-    } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); }
+    } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); };
   } catch (error) {
     errCheck(error);
   };
