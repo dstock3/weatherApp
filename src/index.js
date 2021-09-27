@@ -29,7 +29,6 @@ const process = (data) => {
   const getCity = (() => {
     for (let prop in data) {
       if (prop === "name") {
-        console.log(data[prop])
         weatherObj.name = data[prop];
       };
     };
@@ -81,11 +80,12 @@ const process = (data) => {
     };
   })();
 
+  let name = weatherObj.name;
   let temp = weatherObj.temp;
   let info = weatherObj.info;
   let desc = weatherObj.desc;
 
-  return { temp, info, desc  }
+  return { name, temp, info, desc  }
 };
 
 const weatherElements = (weatherData) => {
@@ -93,6 +93,9 @@ const weatherElements = (weatherData) => {
   let weatherContainer = elementBuilder("div", "weather-container", body);
 
   let infoContainer = elementBuilder("div", "info-container", weatherContainer);
+
+  let cityName = elementBuilder("h2", "city", infoContainer);
+  cityName.textContent = `${weatherData.name}`;
 
   let tempElement = elementBuilder("p", "temp", infoContainer);
   tempElement.textContent = `Temperature: ${weatherData.temp}`;
