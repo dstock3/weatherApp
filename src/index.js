@@ -26,17 +26,41 @@ function priorElementCheck() {
 const process = (data) => {
   let weatherObj = new Object();
 
+  const getCity = (() => {
+    for (let prop in data) {
+      if (prop === "name") {
+        weatherObj.name = data[prop];
+      };
+    };
+  })();
+
   const getTemp = (() => {
     for (let prop in data) {
       let tempInfo = data[prop];
       for (let prop in tempInfo) {
         if (prop === "temp") {
           let temp = tempInfo[prop];
-          weatherObj.temp = temp;
+          weatherObj.temp = Math.round(temp);
         };
+        if (prop === "temp_max") {
+          let temp = tempInfo[prop];
+          weatherObj.high = Math.round(temp);
+        };
+        if (prop === "temp_min") {
+          let temp = tempInfo[prop];
+          weatherObj.low = Math.round(temp);
+        }
       };
     }
   })();
+
+  function infoProcessor(info) {
+    let newInfo = info.charAt(0).toLowerCase() + info.slice(1);
+    if (newInfo === "clouds") {
+      newInfo = "cloudy"
+    };
+    return newInfo
+  };
 
   const getWeather = (() => {
     for (let prop in data) {
@@ -47,7 +71,8 @@ const process = (data) => {
           for (let newProp in newWeather) {
             if (newProp === "main") {
               let info = newWeather[newProp];
-              weatherObj.info = info;
+              let newInfo = infoProcessor(info);
+              weatherObj.info = newInfo;
             };
           };
         };
@@ -72,11 +97,14 @@ const process = (data) => {
     };
   })();
 
+  let name = weatherObj.name;
   let temp = weatherObj.temp;
+  let high = weatherObj.high;
+  let low = weatherObj.low;
   let info = weatherObj.info;
   let desc = weatherObj.desc;
 
-  return { temp, info, desc  }
+  return { name, temp, high, low, info, desc }
 };
 
 const weatherElements = (weatherData) => {
@@ -85,18 +113,18 @@ const weatherElements = (weatherData) => {
 
   let infoContainer = elementBuilder("div", "info-container", weatherContainer);
 
+  let cityName = elementBuilder("h2", "city", infoContainer);
+  cityName.textContent = `${weatherData.name}`;
+
   let tempElement = elementBuilder("p", "temp", infoContainer);
-  tempElement.textContent = `Temperature: ${weatherData.temp}`;
+  tempElement.textContent = `${weatherData.temp}°`;
 
-  let weatherInfo = elementBuilder("p", "main", infoContainer);
-  weatherInfo.textContent = `Info: ${weatherData.info}`;
-
-  let weatherDesc = elementBuilder("p", "description", infoContainer);
-  weatherDesc.textContent = `Description: ${weatherData.desc}`;
+  let forecast = elementBuilder("p", "forecast", infoContainer);
+  forecast.textContent = `The forecast for today is ${weatherData.info} with a high of ${weatherData.high}° and a low of ${weatherData.low}°.`
 
   let imgContainer = elementBuilder("div", "img-container", weatherContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
-  weatherImg.src = `http://via.placeholder.com/100x100`
+  weatherImg.src = `http://via.placeholder.com/100x100`;
 };
 
 const errCheck = (error) => {
@@ -124,10 +152,11 @@ const weather = async (term) => {
     const response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
     const data = await response.json();
+    console.log(data);
     let newWeather = process(data);
     if (newWeather.temp !== undefined) {
       weatherElements(newWeather);
-    } else { errCheck(`That search term was not identified. Please enter a city name.`); }
+    } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); }
   } catch (error) {
     errCheck(error);
   };

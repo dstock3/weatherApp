@@ -41,6 +41,31 @@ body {
     width: 300px;
 }
 
+.info-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.info-container p {
+    padding-bottom: 5%;
+}
+
+.city {
+    font-size: 1.25em;
+    padding-bottom: 7%;
+}
+
+.temp {
+    font-weight: bold;
+    font-size: 2.75em;
+    padding: 1.5%;
+}
+
+.forecast {
+    width: 85%;
+}
+
 @media only screen and (max-width: 600px) {
     body {
         font-size: 1em;
@@ -52,10 +77,12 @@ body {
 
     .head-container {
         width: 85%;
+        padding: 5%;
     }
 
     .weather-container {
         width: 85%;
+        padding: 5%;
     }
 }
 
