@@ -42,6 +42,14 @@ const process = (data) => {
           let temp = tempInfo[prop];
           weatherObj.temp = temp;
         };
+        if (prop === "temp_max") {
+          let temp = tempInfo[prop];
+          weatherObj.high = temp;
+        };
+        if (prop === "temp_min") {
+          let temp = tempInfo[prop];
+          weatherObj.low = temp;
+        }
       };
     }
   })();
@@ -82,10 +90,12 @@ const process = (data) => {
 
   let name = weatherObj.name;
   let temp = weatherObj.temp;
+  let high = weatherObj.high;
+  let low = weatherObj.low;
   let info = weatherObj.info;
   let desc = weatherObj.desc;
 
-  return { name, temp, info, desc  }
+  return { name, temp, high, low, info, desc }
 };
 
 const weatherElements = (weatherData) => {
