@@ -26,6 +26,15 @@ function priorElementCheck() {
 const process = (data) => {
   let weatherObj = new Object();
 
+  const getCity = (() => {
+    for (let prop in data) {
+      if (prop === "name") {
+        console.log(data[prop])
+        weatherObj.name = data[prop];
+      };
+    };
+  })();
+
   const getTemp = (() => {
     for (let prop in data) {
       let tempInfo = data[prop];
@@ -124,6 +133,7 @@ const weather = async (term) => {
     const response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
     const data = await response.json();
+    console.log(data);
     let newWeather = process(data);
     if (newWeather.temp !== undefined) {
       weatherElements(newWeather);
