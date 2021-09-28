@@ -66,6 +66,8 @@ const process = (data) => {
         if (prop === "main") {
           let main = todayObj[prop];
           for (let prop in main) {
+            console.log(prop)
+            console.log(main[prop])
             if (prop === "temp") {
               let temp = main[prop];
               weatherObj.temp = Math.round(temp);
@@ -115,9 +117,11 @@ const process = (data) => {
     for (let prop in data) {
       if (prop === "list") {
         let forecastList = data[prop];
-        for (let i = 0; i < 6; i++) {
-          let newDay = dayObj(forecastList[i]);
-          forecastArray.push(newDay);
+        for (let i = 0; i < forecastList.length; i++) {
+          if ((i % 8) === 0) {
+            let newDay = dayObj(forecastList[i]);
+            forecastArray.push(newDay);
+          };
         };
       };
     };
@@ -140,6 +144,9 @@ const todaysWeather = (weatherData) => {
 
   let cityName = elementBuilder("h2", "city", infoContainer);
   cityName.textContent = `${weatherData.city}`;
+  
+  let date = elementBuilder("p", "todays-date", infoContainer);
+  date.textContent = today.date;
 
   let tempElement = elementBuilder("p", "temp", infoContainer);
   tempElement.textContent = `${today.temp}°`;
@@ -158,7 +165,8 @@ const fiveDayElements = (weatherData) => {
 
   for (let i = 1; i < weatherData.forecastArray.length; i++) {
     let day = weatherData.forecastArray[i];
-    let infoContainer = elementBuilder("div", "forecast-info", forecastContainer);
+    let mainContainer = elementBuilder("div", "main-container", forecastContainer);
+    let infoContainer = elementBuilder("div", "forecast-info", mainContainer);
 
     let dateElement = elementBuilder("p", "forecast-date", infoContainer);
     dateElement.textContent = `${day.date}`;
@@ -166,14 +174,17 @@ const fiveDayElements = (weatherData) => {
     let tempElement = elementBuilder("p", "forecast-temp", infoContainer);
     tempElement.textContent = `${day.temp}°`;
 
-    let highLowElement = elementBuilder("p", "forecast-temp", infoContainer);
+    let highLowElement = elementBuilder("p", "high-low-temp", infoContainer);
     highLowElement.textContent = `High: ${day.high}° / Low: ${day.low}°`;
 
+    let imgContainer = elementBuilder("div", "img-container", mainContainer);
+    let weatherImg = elementBuilder("img", "forecast-img", imgContainer);
+    weatherImg.src = `http://via.placeholder.com/65x65`;
   };
 };
 
 const errCheck = (error) => {
-  priorElementCheck();
+  priorElementCheck("error");
   let errContainer = elementBuilder("div", "weather-container", body);
 
   let errElement = elementBuilder("p", "error", errContainer);
