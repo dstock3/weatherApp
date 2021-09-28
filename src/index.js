@@ -50,8 +50,18 @@ const process = (data) => {
       };
       return newInfo
     };
+
+    const getDate = (() => {
+      for (let prop in todayObj) {
+        if (prop === "dt") {
+          let dt = todayObj[prop];
+          let dayname = new Date(dt * 1000).toLocaleDateString(`en`, { weekday: `long`, });
+          weatherObj.date = dayname;
+        };
+      };
+    })();
   
-    const tempGetter = (() => {
+    const getTemp = (() => {
       for (let prop in todayObj) {
         if (prop === "main") {
           let main = todayObj[prop];
@@ -91,12 +101,13 @@ const process = (data) => {
       };
     })();
 
+    let date = weatherObj.date;
     let temp = weatherObj.temp;
     let high = weatherObj.high;
     let low = weatherObj.low;
     let info = weatherObj.info;
 
-    return { temp, high, low, info }
+    return { date, temp, high, low, info }
   };
 
   const newForecast = () => {
@@ -122,7 +133,7 @@ const process = (data) => {
 const todaysWeather = (weatherData) => {
   priorElementCheck("weather-container");
   let today = weatherData.forecastArray[0];
-  console.log(today);
+
   let weatherContainer = elementBuilder("div", "weather-container", body);
 
   let infoContainer = elementBuilder("div", "info-container", weatherContainer);
@@ -145,10 +156,19 @@ const fiveDayElements = (weatherData) => {
   priorElementCheck("forecast-container");
   let forecastContainer = elementBuilder("div", "forecast-container", body);
 
-  for (let i = 0; i < weatherData.forecastArray.length; i++) {
-    let day = weatherData.forecastArray[i]
-    let tempElement = elementBuilder("p", "forecast-temp", forecastContainer);
+  for (let i = 1; i < weatherData.forecastArray.length; i++) {
+    let day = weatherData.forecastArray[i];
+    let infoContainer = elementBuilder("div", "forecast-info", forecastContainer);
+
+    let dateElement = elementBuilder("p", "forecast-date", infoContainer);
+    dateElement.textContent = `${day.date}`;
+
+    let tempElement = elementBuilder("p", "forecast-temp", infoContainer);
     tempElement.textContent = `${day.temp}°`;
+
+    let highLowElement = elementBuilder("p", "forecast-temp", infoContainer);
+    highLowElement.textContent = `High: ${day.high}° / Low: ${day.low}°`;
+
   };
 };
 

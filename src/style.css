@@ -75,13 +75,17 @@ body {
     margin: auto;
     margin-top: 1%;
     display: flex;
-    align-items: center;
-    justify-content: space-around;
+    flex-direction: column;
     border: solid 2px #0279b4;
     padding: 3%;
     background-color: #03a9fc;
     border-radius: 5px;
     width: 300px;
+}
+
+.forecast-info {
+    display: flex;
+    justify-content: space-around;
 }
 
 @media only screen and (max-width: 600px) {
@@ -99,6 +103,11 @@ body {
     }
 
     .weather-container {
+        width: 85%;
+        padding: 5%;
+    }
+
+    .forecast-container {
         width: 85%;
         padding: 5%;
     }
