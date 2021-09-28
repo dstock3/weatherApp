@@ -154,10 +154,8 @@ const weather = async (term) => {
   let forecastTerm = checkedTerm.forecast;
   let unit = `&units=imperial`;
   try {
-    const response = await fetch(`${weatherTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
-
-    const data = await response.json();
-    console.log(data);
+    const weatherResponse = await fetch(`${weatherTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+    const data = await weatherResponse.json();
     let newWeather = process(data);
     if (newWeather.temp !== undefined) {
       weatherElements(newWeather);
@@ -165,6 +163,13 @@ const weather = async (term) => {
   } catch (error) {
     errCheck(error);
   };
+  try {
+    const forecastResponse = await fetch(`${forecastTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+    const forcastData = await forecastResponse.json();
+    console.log(forcastData);
+  } catch (error) {
+    errCheck(error);
+  }
 };
 
 const searchElements = (() => {
