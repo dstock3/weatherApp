@@ -30,7 +30,18 @@ body {
 }
 
 .search {
-    padding: 2.5%;
+    padding: 3.5%;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.search:hover {
+    background-color: #faf9e8;
+}
+
+.search-button {
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
 }
 
 .weather-container {

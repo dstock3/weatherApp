@@ -176,6 +176,10 @@ const fiveDayElements = (weatherData) => {
     let highLowElement = elementBuilder("p", "forecast-temp", infoContainer);
     highLowElement.textContent = `High: ${day.high}° / Low: ${day.low}°`;
 
+    let imgContainer = elementBuilder("div", "img-container", infoContainer);
+
+    let weatherImg = elementBuilder("img", "forecast-img", imgContainer);
+    weatherImg.src = `http://via.placeholder.com/65x65`;
   };
 };
 
