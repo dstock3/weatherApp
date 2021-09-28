@@ -185,6 +185,8 @@ const fiveDayElements = (weatherData) => {
 
 const errCheck = (error) => {
   priorElementCheck("error");
+  priorElementCheck("weather-container");
+  priorElementCheck("forecast-container");
   let errContainer = elementBuilder("div", "weather-container", body);
 
   let errElement = elementBuilder("p", "error", errContainer);
