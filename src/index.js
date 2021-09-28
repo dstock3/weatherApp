@@ -165,7 +165,8 @@ const fiveDayElements = (weatherData) => {
 
   for (let i = 1; i < weatherData.forecastArray.length; i++) {
     let day = weatherData.forecastArray[i];
-    let infoContainer = elementBuilder("div", "forecast-info", forecastContainer);
+    let mainContainer = elementBuilder("div", "main-container", forecastContainer);
+    let infoContainer = elementBuilder("div", "forecast-info", mainContainer);
 
     let dateElement = elementBuilder("p", "forecast-date", infoContainer);
     dateElement.textContent = `${day.date}`;
@@ -173,11 +174,10 @@ const fiveDayElements = (weatherData) => {
     let tempElement = elementBuilder("p", "forecast-temp", infoContainer);
     tempElement.textContent = `${day.temp}°`;
 
-    let highLowElement = elementBuilder("p", "forecast-temp", infoContainer);
+    let highLowElement = elementBuilder("p", "high-low-temp", infoContainer);
     highLowElement.textContent = `High: ${day.high}° / Low: ${day.low}°`;
 
-    let imgContainer = elementBuilder("div", "img-container", infoContainer);
-
+    let imgContainer = elementBuilder("div", "img-container", mainContainer);
     let weatherImg = elementBuilder("img", "forecast-img", imgContainer);
     weatherImg.src = `http://via.placeholder.com/65x65`;
   };

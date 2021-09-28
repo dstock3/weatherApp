@@ -93,14 +93,23 @@ body {
     width: 300px;
 }
 
-.forecast-info {
+.main-container {
+    margin: auto;
+    width: 90%;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
 }
 
-.forecast-img {
-    margin: 0 70%;
+.forecast-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5%;
+}
+
+.forecast-temp {
+    font-size: 1.5em;
+    padding-bottom: 5%;
 }
 
 @media only screen and (max-width: 600px) {
