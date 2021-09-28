@@ -135,21 +135,26 @@ const errCheck = (error) => {
   errElement.textContent = `Error: ${error}`;
 };
 
-function zipCheck(term) {
+const zipCheck = (term) => {
   let zip = parseInt(term);
   if (Number.isInteger(zip)) {
-    let zipTerm = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us`;
-    return zipTerm
+    let weather = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us`;
+    let forecast = `https://api.openweathermap.org/data/2.5/forecast?zip=${zip},us`;
+    return { weather, forecast };
   } else {
-    return `https://api.openweathermap.org/data/2.5/weather?q=${term}` 
+    let weather = `https://api.openweathermap.org/data/2.5/weather?q=${term}`;
+    let forecast =  `https://api.openweathermap.org/data/2.5/forecast?q=${term}`;
+    return { weather, forecast };
   };
 };
 
 const weather = async (term) => {
   let checkedTerm = zipCheck(term);
+  let weatherTerm = checkedTerm.weather;
+  let forecastTerm = checkedTerm.forecast;
   let unit = `&units=imperial`;
   try {
-    const response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+    const response = await fetch(`${weatherTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
 
     const data = await response.json();
     console.log(data);
