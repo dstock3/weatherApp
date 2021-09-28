@@ -16,115 +16,160 @@ function elementBuilder (elType, className, parent) {
 
 const body = document.querySelector("body");
 
-function priorElementCheck() {
-  let weatherContainer = document.getElementsByClassName("weather-container")[0];
-  if (weatherContainer) {
-    weatherContainer.remove();
+function priorElementCheck(className) {
+  let container = document.getElementsByClassName(className)[0];
+
+  if (container) {
+    container.remove();
   };
 };
 
 const process = (data) => {
-  let weatherObj = new Object();
+  let forecastObj = new Object();
 
   const getCity = (() => {
     for (let prop in data) {
-      if (prop === "name") {
-        weatherObj.name = data[prop];
+      if (prop === "city") {
+        let cityObj = data[prop];
+        for (let prop in cityObj) {
+          if (prop === "name") {
+            forecastObj.name = cityObj[prop];
+          };
+        };
       };
     };
   })();
 
-  const getTemp = (() => {
-    for (let prop in data) {
-      let tempInfo = data[prop];
-      for (let prop in tempInfo) {
-        if (prop === "temp") {
-          let temp = tempInfo[prop];
-          weatherObj.temp = Math.round(temp);
-        };
-        if (prop === "temp_max") {
-          let temp = tempInfo[prop];
-          weatherObj.high = Math.round(temp);
-        };
-        if (prop === "temp_min") {
-          let temp = tempInfo[prop];
-          weatherObj.low = Math.round(temp);
-        }
-      };
-    }
-  })();
+  const dayObj = (todayObj) => {
+    let weatherObj = new Object();
 
-  function infoProcessor(info) {
-    let newInfo = info.charAt(0).toLowerCase() + info.slice(1);
-    if (newInfo === "clouds") {
-      newInfo = "cloudy"
+    function infoProcessor(info) {
+      let newInfo = info.charAt(0).toLowerCase() + info.slice(1);
+      if (newInfo === "clouds") {
+        newInfo = "cloudy"
+      };
+      return newInfo
     };
-    return newInfo
+
+    const getDate = (() => {
+      for (let prop in todayObj) {
+        if (prop === "dt") {
+          let dt = todayObj[prop];
+          let dayname = new Date(dt * 1000).toLocaleDateString(`en`, { weekday: `long`, });
+          weatherObj.date = dayname;
+        };
+      };
+    })();
+  
+    const getTemp = (() => {
+      for (let prop in todayObj) {
+        if (prop === "main") {
+          let main = todayObj[prop];
+          for (let prop in main) {
+            if (prop === "temp") {
+              let temp = main[prop];
+              weatherObj.temp = Math.round(temp);
+            };
+            if (prop === "temp_max") {
+              let temp = main[prop];
+              weatherObj.high = Math.round(temp);
+            };
+            if (prop === "temp_min") {
+              let temp = main[prop];
+              weatherObj.low = Math.round(temp);
+            };
+          };
+        };
+      };
+    })();
+
+    const getWeather = (() => {
+      for (let prop in todayObj) {
+        if (prop === "weather") {
+          let weatherInfo = todayObj[prop];
+          for (let prop in weatherInfo) {
+            let newWeather = weatherInfo[prop];
+            for (let newProp in newWeather) {
+              if (newProp === "main") {
+                let info = newWeather[newProp];
+                let newInfo = infoProcessor(info);
+                weatherObj.info = newInfo;
+              };
+            };
+          };
+        };
+      };
+    })();
+
+    let date = weatherObj.date;
+    let temp = weatherObj.temp;
+    let high = weatherObj.high;
+    let low = weatherObj.low;
+    let info = weatherObj.info;
+
+    return { date, temp, high, low, info }
   };
 
-  const getWeather = (() => {
+  const newForecast = () => {
+    let forecastArray = [];
     for (let prop in data) {
-      if (prop === "weather") {
-        let weatherInfo = data[prop];
-        for (let prop in weatherInfo) {
-          let newWeather = weatherInfo[prop];
-          for (let newProp in newWeather) {
-            if (newProp === "main") {
-              let info = newWeather[newProp];
-              let newInfo = infoProcessor(info);
-              weatherObj.info = newInfo;
-            };
-          };
+      if (prop === "list") {
+        let forecastList = data[prop];
+        for (let i = 0; i < 6; i++) {
+          let newDay = dayObj(forecastList[i]);
+          forecastArray.push(newDay);
         };
       };
     };
-  })();
+    return forecastArray
+  };
 
-  const getDesc = (() => {
-    for (let prop in data) {
-      if (prop === "weather") {
-        let weatherInfo = data[prop];
-        for (let prop in weatherInfo) {
-          let newWeather = weatherInfo[prop];
-          for (let newProp in newWeather) {
-            if (newProp === "description") {
-              let desc = newWeather[newProp];
-              weatherObj.desc = desc;
-            };
-          };
-        };
-      };
-    };
-  })();
-
-  let name = weatherObj.name;
-  let temp = weatherObj.temp;
-  let high = weatherObj.high;
-  let low = weatherObj.low;
-  let info = weatherObj.info;
-  let desc = weatherObj.desc;
-
-  return { name, temp, high, low, info, desc }
+  let city = forecastObj.name;
+  let forecastArray = newForecast();
+  
+  return { city, forecastArray }  
 };
 
-const weatherElements = (weatherData) => {
-  priorElementCheck();
+const todaysWeather = (weatherData) => {
+  priorElementCheck("weather-container");
+  let today = weatherData.forecastArray[0];
+
   let weatherContainer = elementBuilder("div", "weather-container", body);
 
   let infoContainer = elementBuilder("div", "info-container", weatherContainer);
 
   let cityName = elementBuilder("h2", "city", infoContainer);
-  cityName.textContent = `${weatherData.name}`;
+  cityName.textContent = `${weatherData.city}`;
 
   let tempElement = elementBuilder("p", "temp", infoContainer);
-  tempElement.textContent = `${weatherData.temp}°`;
+  tempElement.textContent = `${today.temp}°`;
 
   let forecast = elementBuilder("p", "forecast", infoContainer);
-  forecast.textContent = `The forecast for today is ${weatherData.info} with a high of ${weatherData.high}° and a low of ${weatherData.low}°.`
+  forecast.textContent = `The forecast for today is ${today.info} with a high of ${today.high}° and a low of ${today.low}°.`
 
   let imgContainer = elementBuilder("div", "img-container", weatherContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
   weatherImg.src = `http://via.placeholder.com/100x100`;
+};
+
+const fiveDayElements = (weatherData) => {
+  priorElementCheck("forecast-container");
+  let forecastContainer = elementBuilder("div", "forecast-container", body);
+
+  for (let i = 1; i < weatherData.forecastArray.length; i++) {
+    let day = weatherData.forecastArray[i];
+    let infoContainer = elementBuilder("div", "forecast-info", forecastContainer);
+
+    let dateElement = elementBuilder("p", "forecast-date", infoContainer);
+    dateElement.textContent = `${day.date}`;
+
+    let tempElement = elementBuilder("p", "forecast-temp", infoContainer);
+    tempElement.textContent = `${day.temp}°`;
+
+    let highLowElement = elementBuilder("p", "forecast-temp", infoContainer);
+    highLowElement.textContent = `High: ${day.high}° / Low: ${day.low}°`;
+
+  };
 };
 
 const errCheck = (error) => {
@@ -135,13 +180,14 @@ const errCheck = (error) => {
   errElement.textContent = `Error: ${error}`;
 };
 
-function zipCheck(term) {
+const zipCheck = (term) => {
   let zip = parseInt(term);
   if (Number.isInteger(zip)) {
-    let zipTerm = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us`;
-    return zipTerm
+    let forecast = `https://api.openweathermap.org/data/2.5/forecast?zip=${zip},us`;
+    return forecast;
   } else {
-    return `https://api.openweathermap.org/data/2.5/weather?q=${term}` 
+    let forecast =  `https://api.openweathermap.org/data/2.5/forecast?q=${term}`;
+    return forecast;
   };
 };
 
@@ -150,13 +196,12 @@ const weather = async (term) => {
   let unit = `&units=imperial`;
   try {
     const response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
-
     const data = await response.json();
-    console.log(data);
     let newWeather = process(data);
-    if (newWeather.temp !== undefined) {
-      weatherElements(newWeather);
-    } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); }
+    if (newWeather.city !== undefined) {
+      todaysWeather(newWeather);
+      fiveDayElements(newWeather);
+    } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); };
   } catch (error) {
     errCheck(error);
   };
