@@ -68,7 +68,7 @@ const process = (data) => {
     };
   };
 
-  const getTemp = (() => {
+  const todaysTemp = (() => {
     for (let prop in data) {
       if (prop === "list") {
         let forecastList = data[prop];
@@ -86,10 +86,10 @@ const process = (data) => {
     return newInfo
   };
 
-  const getWeather = (() => {
-    for (let prop in data) {
+  function getWeather(todayObj) {
+    for (let prop in todayObj) {
       if (prop === "weather") {
-        let weatherInfo = data[prop];
+        let weatherInfo = todayObj[prop];
         for (let prop in weatherInfo) {
           let newWeather = weatherInfo[prop];
           for (let newProp in newWeather) {
@@ -102,21 +102,21 @@ const process = (data) => {
         };
       };
     };
-  })();
+  };
 
-  const getDesc = (() => {
+  function forecast(forecastArray) {
+    for (let i = 0; i < forecastArray.length; i++) {
+      let day = forecastList[i];
+      getWeather(day);
+    };
+  };
+
+  const todaysForecast = (() => {
     for (let prop in data) {
-      if (prop === "weather") {
-        let weatherInfo = data[prop];
-        for (let prop in weatherInfo) {
-          let newWeather = weatherInfo[prop];
-          for (let newProp in newWeather) {
-            if (newProp === "description") {
-              let desc = newWeather[newProp];
-              weatherObj.desc = desc;
-            };
-          };
-        };
+      if (prop === "list") {
+        let forecastList = data[prop];
+        let today = forecastList[0];
+        getWeather(today);
       };
     };
   })();
@@ -126,9 +126,8 @@ const process = (data) => {
   let high = weatherObj.high;
   let low = weatherObj.low;
   let info = weatherObj.info;
-  let desc = weatherObj.desc;
 
-  return { name, temp, high, low, info, desc }
+  return { name, temp, high, low, info }
 };
 
 const weatherElements = (weatherData) => {
