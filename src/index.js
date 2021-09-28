@@ -28,11 +28,36 @@ const process = (data) => {
 
   const getCity = (() => {
     for (let prop in data) {
-      if (prop === "name") {
-        weatherObj.name = data[prop];
+      if (prop === "city") {
+        let cityObj = data[prop];
+        for (let prop in cityObj) {
+          if (prop === "name") {
+            weatherObj.name = cityObj[prop];
+            console.log(weatherObj.name)
+          };
+        };
       };
     };
   })();
+
+  /*
+    for (let prop in data) {
+      if (prop === "list") {
+        let forecastList = data[prop];
+        let today = forecastList[0];
+        for (let prop in today) {
+          if (prop === "city") {
+            let cityObj = today[prop];
+            for (let prop in cityObj) {
+              weatherObj.name = data[prop];
+              console.log(weatherObj.name)
+            };
+          };
+        }
+      }
+    };
+  })();
+*/
 
   const getTemp = (() => {
     for (let prop in data) {
@@ -138,24 +163,21 @@ const errCheck = (error) => {
 const zipCheck = (term) => {
   let zip = parseInt(term);
   if (Number.isInteger(zip)) {
-    let weather = `https://api.openweathermap.org/data/2.5/weather?zip=${zip},us`;
     let forecast = `https://api.openweathermap.org/data/2.5/forecast?zip=${zip},us`;
-    return { weather, forecast };
+    return forecast;
   } else {
-    let weather = `https://api.openweathermap.org/data/2.5/weather?q=${term}`;
     let forecast =  `https://api.openweathermap.org/data/2.5/forecast?q=${term}`;
-    return { weather, forecast };
+    return forecast;
   };
 };
 
 const weather = async (term) => {
   let checkedTerm = zipCheck(term);
-  let weatherTerm = checkedTerm.weather;
-  let forecastTerm = checkedTerm.forecast;
   let unit = `&units=imperial`;
   try {
-    const weatherResponse = await fetch(`${weatherTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
-    const data = await weatherResponse.json();
+    const response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+    const data = await response.json();
+    console.log(data);
     let newWeather = process(data);
     if (newWeather.temp !== undefined) {
       weatherElements(newWeather);
@@ -163,13 +185,6 @@ const weather = async (term) => {
   } catch (error) {
     errCheck(error);
   };
-  try {
-    const forecastResponse = await fetch(`${forecastTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
-    const forcastData = await forecastResponse.json();
-    console.log(forcastData);
-  } catch (error) {
-    errCheck(error);
-  }
 };
 
 const searchElements = (() => {
