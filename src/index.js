@@ -106,7 +106,7 @@ const process = (data) => {
 
   function forecast(forecastArray) {
     for (let i = 0; i < forecastArray.length; i++) {
-      let day = forecastList[i];
+      let day = forecastArray[i];
       getWeather(day);
     };
   };
@@ -121,13 +121,19 @@ const process = (data) => {
     };
   })();
 
+  /*
+  const fiveDay = (() => {
+    weatherObj.fiveDayForecast = fiveDayForecast;
+  })(); */
+
   let name = weatherObj.name;
   let temp = weatherObj.temp;
   let high = weatherObj.high;
   let low = weatherObj.low;
   let info = weatherObj.info;
+  //let fiveDayForecast = weatherObj.fiveDayForecast
 
-  return { name, temp, high, low, info }
+  return { name, temp, high, low, info, fiveDayForecast }
 };
 
 const weatherElements = (weatherData) => {
