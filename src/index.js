@@ -33,7 +33,6 @@ const process = (data) => {
         for (let prop in cityObj) {
           if (prop === "name") {
             weatherObj.name = cityObj[prop];
-            console.log(weatherObj.name)
           };
         };
       };
@@ -61,22 +60,30 @@ const process = (data) => {
 
   const getTemp = (() => {
     for (let prop in data) {
-      let tempInfo = data[prop];
-      for (let prop in tempInfo) {
-        if (prop === "temp") {
-          let temp = tempInfo[prop];
-          weatherObj.temp = Math.round(temp);
+      if (prop === "list") {
+        let forecastList = data[prop];
+        let today = forecastList[0];
+        for (let prop in today) {
+          if (prop === "main") {
+            let main = today[prop];
+            for (let prop in main) {
+              if (prop === "temp") {
+                let temp = main[prop];
+                weatherObj.temp = Math.round(temp);
+              };
+              if (prop === "temp_max") {
+                let temp = main[prop];
+                weatherObj.high = Math.round(temp);
+              };
+              if (prop === "temp_min") {
+                let temp = main[prop];
+                weatherObj.low = Math.round(temp);
+              };
+            };
+          };
         };
-        if (prop === "temp_max") {
-          let temp = tempInfo[prop];
-          weatherObj.high = Math.round(temp);
-        };
-        if (prop === "temp_min") {
-          let temp = tempInfo[prop];
-          weatherObj.low = Math.round(temp);
-        }
       };
-    }
+    };
   })();
 
   function infoProcessor(info) {
@@ -177,7 +184,6 @@ const weather = async (term) => {
   try {
     const response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
     const data = await response.json();
-    console.log(data);
     let newWeather = process(data);
     if (newWeather.temp !== undefined) {
       weatherElements(newWeather);
