@@ -27,16 +27,15 @@ body {
 
 .search-container {
     display: flex;
+    width: 100%;
+    justify-content: center;
 }
 
 .search {
     padding: 3.5%;
+    width: 65%;
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
-}
-
-.search:hover {
-    background-color: #faf9e8;
 }
 
 .search-button {
@@ -97,6 +96,11 @@ body {
 .forecast-info {
     display: flex;
     justify-content: space-around;
+    align-items: center;
+}
+
+.forecast-img {
+    margin: 0 70%;
 }
 
 @media only screen and (max-width: 600px) {
