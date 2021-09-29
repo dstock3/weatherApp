@@ -132,11 +132,12 @@ const todaysWeather = (weatherData) => {
 
   let weatherContainer = elementBuilder("div", "weather-container", body);
 
-  let infoContainer = elementBuilder("div", "info-container", weatherContainer);
-
-  let cityName = elementBuilder("h2", "city", infoContainer);
+  let cityName = elementBuilder("h2", "city", weatherContainer);
   cityName.textContent = `${weatherData.city}`;
-  
+
+  let subContainer = elementBuilder("div", "sub-container", weatherContainer)
+  let infoContainer = elementBuilder("div", "info-container", subContainer);
+
   let date = elementBuilder("p", "todays-date", infoContainer);
   date.textContent = today.date;
 
@@ -146,7 +147,7 @@ const todaysWeather = (weatherData) => {
   let forecast = elementBuilder("p", "forecast", infoContainer);
   forecast.textContent = `The forecast for today is ${today.info} with a high of ${today.high}° and a low of ${today.low}°.`
 
-  let imgContainer = elementBuilder("div", "img-container", weatherContainer);
+  let imgContainer = elementBuilder("div", "img-container", subContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
   weatherImg.src = `http://via.placeholder.com/100x100`;
 };
