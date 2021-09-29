@@ -48,7 +48,7 @@ const images = (() => {
 const imageGen = (weatherData) => {
   if (weatherData === "clear") {
     return images.clear
-  } else if (weatherData === "clouds") {
+  } else if (weatherData === "cloudy") {
       return  images.cloudy
   };
 };
@@ -164,7 +164,7 @@ const todaysWeather = (weatherData) => {
 
   let imgContainer = elementBuilder("div", "img-container", subContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
-  weatherImg.src = `/src/clear.png`;
+  weatherImg.src = imageGen(today.info);
 };
 
 const fiveDayElements = (weatherData) => {
@@ -187,7 +187,8 @@ const fiveDayElements = (weatherData) => {
 
     let imgContainer = elementBuilder("div", "img-container", mainContainer);
     let weatherImg = elementBuilder("img", "forecast-img", imgContainer);
-    weatherImg.src = `/src/cloudy.png`;
+    console.log(day.info)
+    weatherImg.src = imageGen(day.info);
   };
 };
 
