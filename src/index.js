@@ -63,21 +63,19 @@ const process = (data) => {
   
     const getTemp = (() => {
       for (let prop in todayObj) {
-        if (prop === "main") {
-          let main = todayObj[prop];
-          for (let prop in main) {
-            console.log(prop)
-            console.log(main[prop])
-            if (prop === "temp") {
-              let temp = main[prop];
+        if (prop === "temp") {
+          let temps = todayObj[prop];
+          for (let prop in temps) {
+            if (prop === "day") {
+              let temp = temps[prop];
               weatherObj.temp = Math.round(temp);
             };
-            if (prop === "temp_max") {
-              let temp = main[prop];
+            if (prop === "max") {
+              let temp = temps[prop];
               weatherObj.high = Math.round(temp);
             };
-            if (prop === "temp_min") {
-              let temp = main[prop];
+            if (prop === "min") {
+              let temp = temps[prop];
               weatherObj.low = Math.round(temp);
             };
           };
@@ -88,15 +86,13 @@ const process = (data) => {
     const getWeather = (() => {
       for (let prop in todayObj) {
         if (prop === "weather") {
-          let weatherInfo = todayObj[prop];
+          let weatherInfo = todayObj[prop][0];
           for (let prop in weatherInfo) {
-            let newWeather = weatherInfo[prop];
-            for (let newProp in newWeather) {
-              if (newProp === "main") {
-                let info = newWeather[newProp];
-                let newInfo = infoProcessor(info);
-                weatherObj.info = newInfo;
-              };
+            if (prop === "main") {
+              let info = weatherInfo[prop];
+              let newInfo = infoProcessor(info);
+              weatherObj.info = newInfo;
+
             };
           };
         };
@@ -115,13 +111,11 @@ const process = (data) => {
   const newForecast = () => {
     let forecastArray = [];
     for (let prop in data) {
-      if (prop === "list") {
+      if (prop === "daily") {
         let forecastList = data[prop];
         for (let i = 0; i < forecastList.length; i++) {
-          if ((i % 8) === 0) {
-            let newDay = dayObj(forecastList[i]);
-            forecastArray.push(newDay);
-          };
+          let newDay = dayObj(forecastList[i]);
+          forecastArray.push(newDay);
         };
       };
     };
@@ -219,19 +213,14 @@ const getCoords = (data) => {
 };
 
 const weather = async (term) => {
-
   let checkedTerm = zipCheck(term);
   let unit = `&units=imperial`;
-
   try {
     let response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
     let data = await response.json();
-
     let coords = getCoords(data);
-
-
     try {
-      let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+      let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
       let data = await response.json();
       console.log(data)
       let newWeather = process(data);
@@ -254,14 +243,12 @@ const searchElements = (() => {
   header.textContent = "WeatherApp";
 
   const searchContainer = elementBuilder("div", "search-container", headContainer);
-
   const searchBar = elementBuilder("input", "search", searchContainer);
   searchBar.setAttribute("type", "text");
   searchBar.setAttribute("placeholder", "Search City or Zip Code...");
 
   const button = elementBuilder("button", "search-button", searchContainer)
   button.textContent = "Search";
-
   button.addEventListener("click", searchWeather);
 
   document.addEventListener('keydown', (event) => {
