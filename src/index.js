@@ -38,13 +38,14 @@ const getCity = (data) => {
   };
 };
 
-const imageGen = (weatherData) => {
-  const images = (() => {
-    const clear = `/src/clear.png`;
-    const cloudy = `/src/cloudy.png`;
-    return { clear, cloudy }
-  })();
+const images = (() => {
+  const clear = `/src/clear.png`;
+  const cloudy = `/src/cloudy.png`;
+  const search = `/src/search.png`;
+  return { clear, cloudy, search }
+})();
 
+const imageGen = (weatherData) => {
   if (weatherData === "clear") {
     return images.clear
   } else if (weatherData === "clouds") {
@@ -257,6 +258,10 @@ const searchElements = (() => {
   header.textContent = "WeatherApp";
 
   const searchContainer = elementBuilder("div", "search-container", headContainer);
+
+  const searchImg = elementBuilder("img", "search-img", searchContainer);
+  searchImg.src = images.search;
+
   const searchBar = elementBuilder("input", "search", searchContainer);
   searchBar.setAttribute("type", "text");
   searchBar.setAttribute("placeholder", "Search City or Zip Code...");
