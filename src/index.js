@@ -24,22 +24,21 @@ function priorElementCheck(className) {
   };
 };
 
-const process = (data) => {
-  let forecastObj = new Object();
-
-  const getCity = (() => {
-    for (let prop in data) {
-      if (prop === "city") {
-        let cityObj = data[prop];
-        for (let prop in cityObj) {
-          if (prop === "name") {
-            forecastObj.name = cityObj[prop];
-          };
+const getCity = (data) => {
+  for (let prop in data) {
+    if (prop === "city") {
+      let cityObj = data[prop];
+      for (let prop in cityObj) {
+        if (prop === "name") {
+          let city = cityObj[prop];
+          return city
         };
       };
     };
-  })();
+  };
+};
 
+const process = (data) => {
   const dayObj = (todayObj) => {
     let weatherObj = new Object();
 
@@ -122,10 +121,9 @@ const process = (data) => {
     return forecastArray
   };
 
-  let city = forecastObj.name;
   let forecastArray = newForecast();
-  
-  return { city, forecastArray }  
+
+  return forecastArray
 };
 
 const todaysWeather = (weatherData) => {
@@ -218,12 +216,13 @@ const weather = async (term) => {
   try {
     let response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
     let data = await response.json();
+    let city = getCity(data);
     let coords = getCoords(data);
     try {
       let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
       let data = await response.json();
-      console.log(data)
-      let newWeather = process(data);
+      let forecastArray = process(data);
+      let newWeather = { city, forecastArray }
       if (newWeather.city !== undefined) {
         todaysWeather(newWeather);
         fiveDayElements(newWeather);
@@ -231,7 +230,7 @@ const weather = async (term) => {
     } catch (error) {
       errCheck(error);
     };
-  } catch {
+  } catch (error) {
     errCheck(error);
   }
 };
