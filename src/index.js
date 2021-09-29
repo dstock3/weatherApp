@@ -149,7 +149,7 @@ const todaysWeather = (weatherData) => {
 
   let imgContainer = elementBuilder("div", "img-container", subContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
-  weatherImg.src = `http://via.placeholder.com/100x100`;
+  weatherImg.src = `/src/clear.png`;
 };
 
 const fiveDayElements = (weatherData) => {
@@ -172,7 +172,7 @@ const fiveDayElements = (weatherData) => {
 
     let imgContainer = elementBuilder("div", "img-container", mainContainer);
     let weatherImg = elementBuilder("img", "forecast-img", imgContainer);
-    weatherImg.src = `http://via.placeholder.com/65x65`;
+    weatherImg.src = `/src/cloudy.png`;
   };
 };
 
