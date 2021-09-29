@@ -38,6 +38,20 @@ const getCity = (data) => {
   };
 };
 
+const imageGen = (weatherData) => {
+  const images = (() => {
+    const clear = `/src/clear.png`;
+    const cloudy = `/src/cloudy.png`;
+    return { clear, cloudy }
+  })();
+
+  if (weatherData === "clear") {
+    return images.clear
+  } else if (weatherData === "clouds") {
+      return  images.cloudy
+  };
+};
+
 const process = (data) => {
   const dayObj = (todayObj) => {
     let weatherObj = new Object();
