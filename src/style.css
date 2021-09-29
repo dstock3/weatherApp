@@ -28,20 +28,31 @@ body {
 
 .search-container {
     display: flex;
-    width: 100%;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    background-color: white;
+    border: solid 2px #0279b4;
 }
 
 .search {
-    padding: 3.5%;
-    width: 65%;
-    border-bottom-left-radius: 5px;
-    border-top-left-radius: 5px;
+    font-size: 1em;
+    position: relative;
+    left: 1%;
+    width: 68%;
+    border: none;
+    background-color: transparent;
+    outline: none;
 }
 
 .search-button {
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
+    padding: 1.75%;
+}
+
+.search-container img {
+    padding-left: 2%;
+    width: 7%;
+    height: 7%;
 }
 
 .weather-container {

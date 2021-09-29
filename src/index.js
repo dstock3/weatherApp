@@ -38,6 +38,21 @@ const getCity = (data) => {
   };
 };
 
+const images = (() => {
+  const clear = `/src/clear.png`;
+  const cloudy = `/src/cloudy.png`;
+  const search = `/src/search.png`;
+  return { clear, cloudy, search }
+})();
+
+const imageGen = (weatherData) => {
+  if (weatherData === "clear") {
+    return images.clear
+  } else if (weatherData === "cloudy") {
+      return  images.cloudy
+  };
+};
+
 const process = (data) => {
   const dayObj = (todayObj) => {
     let weatherObj = new Object();
@@ -149,7 +164,7 @@ const todaysWeather = (weatherData) => {
 
   let imgContainer = elementBuilder("div", "img-container", subContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
-  weatherImg.src = `http://via.placeholder.com/100x100`;
+  weatherImg.src = imageGen(today.info);
 };
 
 const fiveDayElements = (weatherData) => {
@@ -172,7 +187,8 @@ const fiveDayElements = (weatherData) => {
 
     let imgContainer = elementBuilder("div", "img-container", mainContainer);
     let weatherImg = elementBuilder("img", "forecast-img", imgContainer);
-    weatherImg.src = `http://via.placeholder.com/65x65`;
+    console.log(day.info)
+    weatherImg.src = imageGen(day.info);
   };
 };
 
@@ -243,6 +259,10 @@ const searchElements = (() => {
   header.textContent = "WeatherApp";
 
   const searchContainer = elementBuilder("div", "search-container", headContainer);
+
+  const searchImg = elementBuilder("img", "search-img", searchContainer);
+  searchImg.src = images.search;
+
   const searchBar = elementBuilder("input", "search", searchContainer);
   searchBar.setAttribute("type", "text");
   searchBar.setAttribute("placeholder", "Search City or Zip Code...");
