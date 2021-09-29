@@ -204,20 +204,47 @@ const zipCheck = (term) => {
   };
 };
 
+const getCoords = (data) => {
+  for (let prop in data) {
+    if (prop === "city") {
+      let city = data[prop]
+      for (let prop in city) {
+        if (prop === "coord") {
+          let coord = city[prop];
+          return coord
+        };
+      };
+    };
+  };
+};
+
 const weather = async (term) => {
+
   let checkedTerm = zipCheck(term);
   let unit = `&units=imperial`;
+
   try {
-    const response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
-    const data = await response.json();
-    let newWeather = process(data);
-    if (newWeather.city !== undefined) {
-      todaysWeather(newWeather);
-      fiveDayElements(newWeather);
-    } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); };
-  } catch (error) {
+    let response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+    let data = await response.json();
+
+    let coords = getCoords(data);
+
+
+    try {
+      let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+      let data = await response.json();
+      console.log(data)
+      let newWeather = process(data);
+      if (newWeather.city !== undefined) {
+        todaysWeather(newWeather);
+        fiveDayElements(newWeather);
+      } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); };
+    } catch (error) {
+      errCheck(error);
+    };
+  } catch {
     errCheck(error);
-  };
+  }
 };
 
 const searchElements = (() => {
