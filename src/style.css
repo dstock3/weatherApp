@@ -2,6 +2,7 @@ body {
     font-size: 1.2em;
     background-color: #caeafa;
     color: #ffffff;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .head {
@@ -79,6 +80,7 @@ body {
 
 .forecast {
     width: 85%;
+    font-size: 1.25em;
 }
 
 .forecast-container {
@@ -95,7 +97,7 @@ body {
 
 .main-container {
     margin: auto;
-    width: 90%;
+    width: 95%;
     display: flex;
     justify-content: space-between;
 }

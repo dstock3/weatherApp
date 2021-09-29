@@ -24,22 +24,21 @@ function priorElementCheck(className) {
   };
 };
 
-const process = (data) => {
-  let forecastObj = new Object();
-
-  const getCity = (() => {
-    for (let prop in data) {
-      if (prop === "city") {
-        let cityObj = data[prop];
-        for (let prop in cityObj) {
-          if (prop === "name") {
-            forecastObj.name = cityObj[prop];
-          };
+const getCity = (data) => {
+  for (let prop in data) {
+    if (prop === "city") {
+      let cityObj = data[prop];
+      for (let prop in cityObj) {
+        if (prop === "name") {
+          let city = cityObj[prop];
+          return city
         };
       };
     };
-  })();
+  };
+};
 
+const process = (data) => {
   const dayObj = (todayObj) => {
     let weatherObj = new Object();
 
@@ -63,21 +62,19 @@ const process = (data) => {
   
     const getTemp = (() => {
       for (let prop in todayObj) {
-        if (prop === "main") {
-          let main = todayObj[prop];
-          for (let prop in main) {
-            console.log(prop)
-            console.log(main[prop])
-            if (prop === "temp") {
-              let temp = main[prop];
+        if (prop === "temp") {
+          let temps = todayObj[prop];
+          for (let prop in temps) {
+            if (prop === "day") {
+              let temp = temps[prop];
               weatherObj.temp = Math.round(temp);
             };
-            if (prop === "temp_max") {
-              let temp = main[prop];
+            if (prop === "max") {
+              let temp = temps[prop];
               weatherObj.high = Math.round(temp);
             };
-            if (prop === "temp_min") {
-              let temp = main[prop];
+            if (prop === "min") {
+              let temp = temps[prop];
               weatherObj.low = Math.round(temp);
             };
           };
@@ -88,15 +85,13 @@ const process = (data) => {
     const getWeather = (() => {
       for (let prop in todayObj) {
         if (prop === "weather") {
-          let weatherInfo = todayObj[prop];
+          let weatherInfo = todayObj[prop][0];
           for (let prop in weatherInfo) {
-            let newWeather = weatherInfo[prop];
-            for (let newProp in newWeather) {
-              if (newProp === "main") {
-                let info = newWeather[newProp];
-                let newInfo = infoProcessor(info);
-                weatherObj.info = newInfo;
-              };
+            if (prop === "main") {
+              let info = weatherInfo[prop];
+              let newInfo = infoProcessor(info);
+              weatherObj.info = newInfo;
+
             };
           };
         };
@@ -115,23 +110,20 @@ const process = (data) => {
   const newForecast = () => {
     let forecastArray = [];
     for (let prop in data) {
-      if (prop === "list") {
+      if (prop === "daily") {
         let forecastList = data[prop];
         for (let i = 0; i < forecastList.length; i++) {
-          if ((i % 8) === 0) {
-            let newDay = dayObj(forecastList[i]);
-            forecastArray.push(newDay);
-          };
+          let newDay = dayObj(forecastList[i]);
+          forecastArray.push(newDay);
         };
       };
     };
     return forecastArray
   };
 
-  let city = forecastObj.name;
   let forecastArray = newForecast();
-  
-  return { city, forecastArray }  
+
+  return forecastArray
 };
 
 const todaysWeather = (weatherData) => {
@@ -185,6 +177,8 @@ const fiveDayElements = (weatherData) => {
 
 const errCheck = (error) => {
   priorElementCheck("error");
+  priorElementCheck("weather-container");
+  priorElementCheck("forecast-container");
   let errContainer = elementBuilder("div", "weather-container", body);
 
   let errElement = elementBuilder("p", "error", errContainer);
@@ -202,20 +196,43 @@ const zipCheck = (term) => {
   };
 };
 
+const getCoords = (data) => {
+  for (let prop in data) {
+    if (prop === "city") {
+      let city = data[prop]
+      for (let prop in city) {
+        if (prop === "coord") {
+          let coord = city[prop];
+          return coord
+        };
+      };
+    };
+  };
+};
+
 const weather = async (term) => {
   let checkedTerm = zipCheck(term);
   let unit = `&units=imperial`;
   try {
-    const response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
-    const data = await response.json();
-    let newWeather = process(data);
-    if (newWeather.city !== undefined) {
-      todaysWeather(newWeather);
-      fiveDayElements(newWeather);
-    } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); };
+    let response = await fetch(`${checkedTerm + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+    let data = await response.json();
+    let city = getCity(data);
+    let coords = getCoords(data);
+    try {
+      let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
+      let data = await response.json();
+      let forecastArray = process(data);
+      let newWeather = { city, forecastArray }
+      if (newWeather.city !== undefined) {
+        todaysWeather(newWeather);
+        fiveDayElements(newWeather);
+      } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); };
+    } catch (error) {
+      errCheck(error);
+    };
   } catch (error) {
     errCheck(error);
-  };
+  }
 };
 
 const searchElements = (() => {
@@ -225,14 +242,12 @@ const searchElements = (() => {
   header.textContent = "WeatherApp";
 
   const searchContainer = elementBuilder("div", "search-container", headContainer);
-
   const searchBar = elementBuilder("input", "search", searchContainer);
   searchBar.setAttribute("type", "text");
   searchBar.setAttribute("placeholder", "Search City or Zip Code...");
 
   const button = elementBuilder("button", "search-button", searchContainer)
   button.textContent = "Search";
-
   button.addEventListener("click", searchWeather);
 
   document.addEventListener('keydown', (event) => {
