@@ -245,9 +245,15 @@ const weather = async (term) => {
       if (newWeather.city !== undefined) {
         todaysWeather(newWeather);
         fiveDayElements(newWeather);
-      } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); };
+      } else { 
+        errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
+      };
     } catch (error) {
-      errCheck(error);
+      if (error == `TypeError: Cannot read properties of undefined (reading 'lat')`) {
+        errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
+      } else { 
+        errCheck(error); 
+      };
     };
   } catch (error) {
     errCheck(error);
