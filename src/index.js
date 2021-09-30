@@ -41,8 +41,9 @@ const getCity = (data) => {
 const images = (() => {
   const clear = `/src/clear.png`;
   const cloudy = `/src/cloudy.png`;
+  const rain = `/src/rain.png`;
   const search = `/src/search.png`;
-  return { clear, cloudy, search }
+  return { clear, cloudy, search, rain }
 })();
 
 const imageGen = (weatherData) => {
@@ -50,7 +51,9 @@ const imageGen = (weatherData) => {
     return images.clear
   } else if (weatherData === "cloudy") {
       return  images.cloudy
-  };
+  } else if (weatherData === "rain") {
+    return images.rain
+  }
 };
 
 const process = (data) => {
@@ -187,7 +190,6 @@ const fiveDayElements = (weatherData) => {
 
     let imgContainer = elementBuilder("div", "img-container", mainContainer);
     let weatherImg = elementBuilder("img", "forecast-img", imgContainer);
-    console.log(day.info)
     weatherImg.src = imageGen(day.info);
   };
 };
