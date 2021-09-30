@@ -43,7 +43,7 @@ const images = (() => {
   const cloudy = `/src/assets/cloudy.png`;
   const rain = `/src/assets/rain.png`;
   const search = `/src/assets/search.png`;
-  return { clear, cloudy, search, rain }
+  return { clear, cloudy, rain, search }
 })();
 
 const imageGen = (weatherData) => {
