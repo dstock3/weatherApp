@@ -39,10 +39,10 @@ const getCity = (data) => {
 };
 
 const images = (() => {
-  const clear = `/src/clear.png`;
-  const cloudy = `/src/cloudy.png`;
-  const rain = `/src/rain.png`;
-  const search = `/src/search.png`;
+  const clear = `/src/assets/clear.png`;  
+  const cloudy = `/src/assets/cloudy.png`;
+  const rain = `/src/assets/rain.png`;
+  const search = `/src/assets/search.png`;
   return { clear, cloudy, search, rain }
 })();
 
