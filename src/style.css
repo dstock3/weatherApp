@@ -83,7 +83,7 @@ body {
 }
 
 .weather-img {
-    width: 115px;
+    width: 150px;
 
 }
 
@@ -138,6 +138,10 @@ body {
 .forecast-temp {
     font-size: 1.5em;
     padding-bottom: 5%;
+}
+
+.error {
+    font-size: 1.25em;
 }
 
 @media only screen and (max-width: 600px) {

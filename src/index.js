@@ -39,11 +39,11 @@ const getCity = (data) => {
 };
 
 const images = (() => {
-  const clear = `/src/clear.png`;
-  const cloudy = `/src/cloudy.png`;
-  const rain = `/src/rain.png`;
-  const search = `/src/search.png`;
-  return { clear, cloudy, search, rain }
+  const clear = `/src/assets/clear.png`;  
+  const cloudy = `/src/assets/cloudy.png`;
+  const rain = `/src/assets/rain.png`;
+  const search = `/src/assets/search.png`;
+  return { clear, cloudy, rain, search }
 })();
 
 const imageGen = (weatherData) => {
@@ -245,9 +245,15 @@ const weather = async (term) => {
       if (newWeather.city !== undefined) {
         todaysWeather(newWeather);
         fiveDayElements(newWeather);
-      } else { errCheck(`That search term was not identified. Please enter a city name or zip code.`); };
+      } else { 
+        errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
+      };
     } catch (error) {
-      errCheck(error);
+      if (error == `TypeError: Cannot read properties of undefined (reading 'lat')`) {
+        errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
+      } else { 
+        errCheck(error); 
+      };
     };
   } catch (error) {
     errCheck(error);
