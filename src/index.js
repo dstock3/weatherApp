@@ -125,6 +125,23 @@ const process = (data) => {
     return { date, temp, high, low, info }
   };
 
+  const alerts = (() => {
+    for (let prop in data) {
+      if (prop === "alerts") {
+        let alertArray = data[prop]
+        console.log(alertArray)
+        
+        let alert = new Object();
+
+        alert.desc = alertArray[0]
+
+       
+        
+        
+      };
+    };
+  })();
+
   const newForecast = () => {
     let forecastArray = [];
     for (let prop in data) {
@@ -171,7 +188,7 @@ const todaysWeather = (weatherData) => {
   weatherImg.id = `${today.info}`;
 };
 
-const fiveDayElements = (weatherData) => {
+const weekElements = (weatherData) => {
   priorElementCheck("forecast-container");
   let forecastContainer = elementBuilder("div", "forecast-container", body);
 
@@ -242,11 +259,12 @@ const weather = async (term) => {
     try {
       let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
       let data = await response.json();
+      console.log(data)
       let forecastArray = process(data);
       let newWeather = { city, forecastArray }
       if (newWeather.city !== undefined) {
         todaysWeather(newWeather);
-        fiveDayElements(newWeather);
+        weekElements(newWeather);
       } else { 
         errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
       };
