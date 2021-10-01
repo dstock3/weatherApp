@@ -125,22 +125,21 @@ const process = (data) => {
     return { date, temp, high, low, info }
   };
 
-  const alerts = (() => {
+  const alerts = () => {
     for (let prop in data) {
       if (prop === "alerts") {
-        let alertArray = data[prop]
-        console.log(alertArray)
-        
-        let alert = new Object();
-
-        alert.desc = alertArray[0]
-
-       
-        
-        
+        let alertArray = data[prop];
+        let newAlertArray = [];
+        for (let i = 0; i < alertArray.length; i++) {
+          let newAlert = new Object();
+          newAlert.event = alertArray[i].event;
+          newAlert.desc = alertArray[i].description;
+          newAlertArray.push(newAlert);
+        };
+        return newAlertArray
       };
     };
-  })();
+  };
 
   const newForecast = () => {
     let forecastArray = [];
@@ -157,8 +156,9 @@ const process = (data) => {
   };
 
   let forecastArray = newForecast();
+  let alertArray = alerts();
 
-  return forecastArray
+  return { forecastArray, alertArray }
 };
 
 const todaysWeather = (weatherData) => {
@@ -186,6 +186,20 @@ const todaysWeather = (weatherData) => {
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
   weatherImg.src = imageGen(today.info);
   weatherImg.id = `${today.info}`;
+};
+
+const alertCheck = (alertArray) => {
+  if (alertArray) {
+    priorElementCheck("alert-container");
+    let alertElement = elementBuilder("div", "alert-container", body);
+    for (let i = 0; i < alertArray.length; i++) {
+      let newAlert = alertArray[i];
+      let alertTitle = elementBuilder("p", "alert", alertElement);
+      alertTitle.textContent = newAlert.event;
+      let alertDesc = elementBuilder("p", "alert-desc", alertElement);
+      alertDesc.textContent = newAlert.desc;
+    };
+  };
 };
 
 const weekElements = (weatherData) => {
@@ -259,12 +273,14 @@ const weather = async (term) => {
     try {
       let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
       let data = await response.json();
-      console.log(data)
-      let forecastArray = process(data);
+      let forecastObj = process(data);
+      let forecastArray = forecastObj.forecastArray;
+      let alertArray = forecastObj.alertArray;
       let newWeather = { city, forecastArray }
       if (newWeather.city !== undefined) {
         todaysWeather(newWeather);
         weekElements(newWeather);
+        alertCheck(alertArray);
       } else { 
         errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
       };
