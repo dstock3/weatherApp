@@ -180,13 +180,13 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    width: 85%;
+    width: 95%;
     padding-bottom: 5%;
 }
 
 .alert-title {
     align-self: center;
-    font-size: 1.25em;
+    font-size: 1.5em;
     text-decoration: underline;
     padding-bottom: 3.33%;
 }
@@ -211,6 +211,11 @@ body {
     }
 
     .forecast-container {
+        width: 85%;
+        padding: 5%;
+    }
+
+    .alerts-container {
         width: 85%;
         padding: 5%;
     }

@@ -279,6 +279,7 @@ const weather = async (term) => {
       let alertArray = forecastObj.alertArray;
       let newWeather = { city, forecastArray }
       if (newWeather.city !== undefined) {
+        priorElementCheck("alerts-container");
         todaysWeather(newWeather);
         alertCheck(alertArray);
         weekElements(newWeather);
