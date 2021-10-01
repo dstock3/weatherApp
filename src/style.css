@@ -159,7 +159,36 @@ body {
     position: relative;
     left: 35%;
     width: 75%;
+}
 
+/* Alerts */
+
+.alerts-container {
+    margin: auto;
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: solid 2px #0279b4;
+    padding: 3%;
+    background-color: #028fd6;
+    border-radius: 5px;
+    width: 300px;
+}
+
+.alert {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 85%;
+    padding-bottom: 5%;
+}
+
+.alert-title {
+    align-self: center;
+    font-size: 1.25em;
+    text-decoration: underline;
+    padding-bottom: 3.33%;
 }
 
 @media only screen and (max-width: 600px) {

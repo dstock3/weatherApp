@@ -191,12 +191,13 @@ const todaysWeather = (weatherData) => {
 const alertCheck = (alertArray) => {
   if (alertArray) {
     priorElementCheck("alert-container");
-    let alertElement = elementBuilder("div", "alert-container", body);
+    let alertsElement = elementBuilder("div", "alerts-container", body);
     for (let i = 0; i < alertArray.length; i++) {
       let newAlert = alertArray[i];
-      let alertTitle = elementBuilder("p", "alert", alertElement);
+      let alertContainer = elementBuilder("div", "alert", alertsElement);
+      let alertTitle = elementBuilder("p", "alert-title", alertContainer);
       alertTitle.textContent = newAlert.event;
-      let alertDesc = elementBuilder("p", "alert-desc", alertElement);
+      let alertDesc = elementBuilder("p", "alert-desc", alertContainer);
       alertDesc.textContent = newAlert.desc;
     };
   };
@@ -279,8 +280,8 @@ const weather = async (term) => {
       let newWeather = { city, forecastArray }
       if (newWeather.city !== undefined) {
         todaysWeather(newWeather);
-        weekElements(newWeather);
         alertCheck(alertArray);
+        weekElements(newWeather);
       } else { 
         errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
       };
