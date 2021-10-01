@@ -168,6 +168,7 @@ const todaysWeather = (weatherData) => {
   let imgContainer = elementBuilder("div", "img-container", subContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
   weatherImg.src = imageGen(today.info);
+  weatherImg.id = `${today.info}`;
 };
 
 const fiveDayElements = (weatherData) => {
@@ -191,6 +192,7 @@ const fiveDayElements = (weatherData) => {
     let imgContainer = elementBuilder("div", "img-container", mainContainer);
     let weatherImg = elementBuilder("img", "forecast-img", imgContainer);
     weatherImg.src = imageGen(day.info);
+    weatherImg.id = `${day.info}`;
   };
 };
 

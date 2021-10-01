@@ -68,6 +68,12 @@ body {
     width: 300px;
 }
 
+.weather-container #clear {
+    position: relative;
+    right: 65%;
+    width: 200%;
+}
+
 .info-container {
     display: flex;
     flex-direction: column;
@@ -126,6 +132,7 @@ body {
     width: 95%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .forecast-info {
@@ -136,12 +143,23 @@ body {
 }
 
 .forecast-temp {
-    font-size: 1.5em;
+    font-size: 1.33em;
     padding-bottom: 5%;
+}
+
+.high-low-temp {
+    display: inline;
 }
 
 .error {
     font-size: 1.25em;
+}
+
+.forecast-container #clear {
+    position: relative;
+    left: 35%;
+    width: 75%;
+
 }
 
 @media only screen and (max-width: 600px) {
