@@ -116,10 +116,11 @@ body {
 .forecast-container {
     margin: auto;
     margin-top: 1%;
+    margin-bottom: 1%;
     display: flex;
     flex-direction: column;
     border: solid 2px #0279b4;
-    padding-top: 1%;
+    padding-top: 1.75%;
     padding-inline: 3%;
     padding-bottom: 3%;
     background-color: #028fd6;
@@ -183,6 +184,7 @@ body {
     background-color: #028fd6;
     border-radius: 5px;
     width: 300px;
+    box-shadow: 10px 5px 5px #012f4677;
 }
 
 .alert {
