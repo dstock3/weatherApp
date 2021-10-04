@@ -144,9 +144,14 @@ body {
 }
 
 .forecast-info {
+    width: 55%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 15%;
+}
+
+.img-container {
     padding-bottom: 15%;
 }
 
@@ -156,7 +161,7 @@ body {
 }
 
 .high-low-temp {
-    display: inline;
+    display: inline-block;
 }
 
 .error {
@@ -165,8 +170,8 @@ body {
 
 .forecast-container #clear {
     position: relative;
-    left: 35%;
-    width: 75%;
+    left: 40%;
+    width: 65%;
 }
 
 /* Alerts */
