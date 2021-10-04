@@ -143,6 +143,10 @@ body {
     align-items: center;
 }
 
+.forecast-date {
+    padding-bottom: 5%;
+}
+
 .forecast-info {
     width: 55%;
     display: flex;
@@ -156,7 +160,7 @@ body {
 }
 
 .forecast-temp {
-    font-size: 1.33em;
+    font-size: 1.5em;
     padding-bottom: 5%;
 }
 
