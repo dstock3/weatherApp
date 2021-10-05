@@ -47,9 +47,10 @@ body {
 }
 
 .search-button {
+    width: 20%;
     padding: 1.75%;
-    padding-left: 2.5%;
-    background-color: #006192;
+    padding-left: 2.5%; 
+    background-color: #01689c;
     cursor: pointer;
 }
 
