@@ -313,7 +313,7 @@ const searchElements = (() => {
   searchBar.setAttribute("type", "text");
   searchBar.setAttribute("placeholder", "Search City or Zip Code...");
 
-  const button = elementBuilder("button", "search-button", searchContainer)
+  const button = elementBuilder("div", "search-button", searchContainer)
   button.textContent = "Search";
   button.addEventListener("click", searchWeather);
 

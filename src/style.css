@@ -48,6 +48,9 @@ body {
 
 .search-button {
     padding: 1.75%;
+    padding-left: 2.5%;
+    background-color: #006192;
+    cursor: pointer;
 }
 
 .search-container img {
