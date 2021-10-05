@@ -227,21 +227,25 @@ body {
     .head-container {
         width: 85%;
         padding: 5%;
+        box-shadow: none;
     }
 
     .weather-container {
         width: 85%;
         padding: 5%;
+        box-shadow: none;
     }
 
     .forecast-container {
         width: 85%;
         padding: 5%;
+        box-shadow: none;
     }
 
     .alerts-container {
         width: 85%;
         padding: 5%;
+        box-shadow: none;
     }
 }
 
