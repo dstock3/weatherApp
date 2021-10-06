@@ -217,22 +217,36 @@ body {
 
 /* Themes */
 
-#clear {
+#clear-theme {
     border: solid 2px #0279b4;
     background-color: #028fd6;
     box-shadow: 10px 5px 5px #012f4677;
 }
 
-#rain {
-    border: solid 2px #4b5357;
-    background-color: #687379;
-    box-shadow: 10px 5px 5px #00496d77;
+#clear-accent {
+    background-color: #caeafa;
 }
 
-#cloudy {
-    border: solid 2px #8f8f8f;
-    background-color: #687379;
+#rain-theme {
+    border: solid 2px #3a3c41;
+    background-color: #475d86;
+    box-shadow: 10px 5px 5px #102752ce;
+    color: #c7d9fa;
+}
+
+#rain-accent {
+    background-color: #1d2636;
+}
+
+#cloudy-theme {
+    border: solid 2px #424242;
+    background-color: #797979;
     box-shadow: 10px 5px 5px #1b202277;
+    color: white;
+}
+
+#cloudy-accent {
+    background-color: #c0c0c0;
 }
 
 @media only screen and (max-width: 600px) {

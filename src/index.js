@@ -345,10 +345,21 @@ const applyTheme = (data) => {
   let forecast = document.getElementsByClassName("forecast-container")[0]; 
   let warning = document.getElementsByClassName("alerts-container")[0]; 
   let themeElements = [head, weather, forecast, warning];
+
+  let body = document.querySelector("body");
+  console.log(body)
+  let accentElements = [body]
+
   for (let i = 0; i < themeElements.length; i++) {
     if (themeElements[i]) {
-      let container = themeElements[i]
-      container.id = themeArray[0];
+      let container = themeElements[i];
+      container.id = `${themeArray[0]}-theme`;
+    };
+  };
+  for (let i = 0; i < accentElements.length; i++) {
+    if (accentElements[i]) {
+      let container = accentElements[i];
+      container.id = `${themeArray[0]}-accent`;
     };
   };
 };
