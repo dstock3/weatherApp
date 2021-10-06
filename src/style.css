@@ -215,6 +215,26 @@ body {
     padding-bottom: 3.33%;
 }
 
+/* Themes */
+
+#clear {
+    border: solid 2px #0279b4;
+    background-color: #028fd6;
+    box-shadow: 10px 5px 5px #012f4677;
+}
+
+#rain {
+    border: solid 2px #4b5357;
+    background-color: #687379;
+    box-shadow: 10px 5px 5px #00496d77;
+}
+
+#cloudy {
+    border: solid 2px #8f8f8f;
+    background-color: #687379;
+    box-shadow: 10px 5px 5px #1b202277;
+}
+
 @media only screen and (max-width: 600px) {
     body {
         font-size: 1em;
