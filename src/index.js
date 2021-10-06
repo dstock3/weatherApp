@@ -283,6 +283,8 @@ const weather = async (term) => {
         todaysWeather(newWeather);
         alertCheck(alertArray);
         weekElements(newWeather);
+        console.log(forecastObj)
+        applyTheme(newWeather);
       } else { 
         errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
       };
@@ -328,4 +330,28 @@ const searchElements = (() => {
     weather(term);
   };
 })();
+
+const applyTheme = (data) => {
+  const themeArray = []
+  for (let prop in data) {
+    if (prop === "forecastArray") {
+      const theme = data[prop][0].info;
+      themeArray.push(theme)
+    };
+  };
+
+  let head = document.getElementsByClassName("head-container")[0];
+  let weather = document.getElementsByClassName("weather-container")[0];
+  let forecast = document.getElementsByClassName("forecast-container")[0]; 
+  let warning = document.getElementsByClassName("alerts-container")[0]; 
+  let themeElements = [head, weather, forecast, warning];
+  for (let i = 0; i < themeElements.length; i++) {
+    if (themeElements[i]) {
+      let container = themeElements[i]
+      container.id = themeArray[0];
+    };
+  };
+};
+
+
 
