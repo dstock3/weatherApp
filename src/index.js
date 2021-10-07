@@ -333,18 +333,26 @@ const searchElements = (() => {
 
 const applyTheme = (data) => {
   const themeArray = []
-  for (let prop in data) {
-    if (prop === "forecastArray") {
-      const theme = data[prop][0].info;
-      themeArray.push(theme)
+
+  const getTheme = (() => {
+    for (let prop in data) {
+      if (prop === "forecastArray") {
+        const theme = data[prop][0].info;
+        themeArray.push(theme)
+      };
     };
+  })();
+
+  const getThemeElements = () => {
+    let head = document.getElementsByClassName("head-container")[0];
+    let weather = document.getElementsByClassName("weather-container")[0];
+    let forecast = document.getElementsByClassName("forecast-container")[0]; 
+    let warning = document.getElementsByClassName("alerts-container")[0]; 
+    let themeElements = [head, weather, forecast, warning];
+    return themeElements
   };
 
-  let head = document.getElementsByClassName("head-container")[0];
-  let weather = document.getElementsByClassName("weather-container")[0];
-  let forecast = document.getElementsByClassName("forecast-container")[0]; 
-  let warning = document.getElementsByClassName("alerts-container")[0]; 
-  let themeElements = [head, weather, forecast, warning];
+  let themeElements = getThemeElements();
 
   for (let i = 0; i < themeElements.length; i++) {
     if (themeElements[i]) {
