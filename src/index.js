@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './style.css';
-import 'reset-css';
+//import 'reset-css';
 
 const head = document.getElementsByTagName("head")[0];
 const meta = elementBuilder("meta", "meta-tag", head);
