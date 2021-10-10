@@ -4,14 +4,16 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "webpack"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/preset-env": "^7.15.8",
     "css-loader": "^6.3.0",
+    "jest": "^27.2.5",
     "style-loader": "^3.3.0",
     "webpack": "^5.54.0",
     "webpack-cli": "^4.8.0"
@@ -19,5 +21,16 @@
   "dependencies": {
     "lodash": "^4.17.21",
     "reset-css": "^5.0.1"
+  },
+  "jest": {
+    "modulePaths": ["/shared/vendor/modules"],
+    "moduleFileExtensions": ["js", "jsx", "json"],
+    "moduleDirectories": ["node_modules", "bower_components", "shared"],
+
+    "moduleNameMapper": {
+      "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js",
+      "\\.(gif|ttf|eot|svg)$": "<rootDir>/__mocks__/fileMock.js",
+      "^config$": "<rootDir>/configs/app-config.js"
+    }
   }
 }

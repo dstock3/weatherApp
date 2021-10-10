@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './style.css';
-import 'reset-css';
+//import 'reset-css';
 
 const head = document.getElementsByTagName("head")[0];
 const meta = elementBuilder("meta", "meta-tag", head);
@@ -283,7 +283,6 @@ const weather = async (term) => {
         todaysWeather(newWeather);
         alertCheck(alertArray);
         weekElements(newWeather);
-        console.log(forecastObj)
         applyTheme(newWeather);
       } else { 
         errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
@@ -365,5 +364,5 @@ const applyTheme = (data) => {
   body.id = `${themeArray[0]}-accent`;
 };
 
-
+export { process }
 
