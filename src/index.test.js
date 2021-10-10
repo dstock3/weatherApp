@@ -7,11 +7,11 @@
 import { process } from './index'
 import { mockData } from './mockData'
 
+/* for the process function */
+
 const processedData = process(mockData)
 let forecast = processedData.forecastArray;
 let alerts = processedData.alertArray;
-
-console.log(forecast)
 
 test('process returns an object', () => {
     expect(typeof processedData).toBe('object');
