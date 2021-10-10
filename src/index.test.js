@@ -5,17 +5,16 @@
 import { process } from './index'
 import { mockData } from './mockData'
 
-test('use jsdom in this test file', () => {
-    const element = document.createElement('div');
-    expect(element).not.toBeNull();
-});
+const processedData = process(mockData)
 
 test('process returns an object', () => {
-    let processedData = process(mockData)
     expect(typeof processedData).toBe('object');
 });
 
-test('process function returns a forecast array with the appropriate length', () => {
-    let processedData = process(mockData)
-    expect(processedData.forecastArray.length).toBe(8);
+test('process function returns an object containing a forecast array property', () => {
+    expect(processedData.forecastArray).not.toBeNull();
+});
+
+test('process function returns an object containing a alert array property', () => {
+    expect(processedData.alertArray).not.toBeNull();
 });
