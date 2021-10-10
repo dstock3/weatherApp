@@ -274,6 +274,7 @@ const weather = async (term) => {
     try {
       let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
       let data = await response.json();
+      console.log(data);
       let forecastObj = process(data);
       let forecastArray = forecastObj.forecastArray;
       let alertArray = forecastObj.alertArray;
@@ -358,5 +359,5 @@ const applyTheme = (data) => {
   body.id = `${themeArray[0]}-accent`;
 };
 
-
+export { process }
 
