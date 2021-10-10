@@ -274,7 +274,6 @@ const weather = async (term) => {
     try {
       let response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${coords.lat}&lon=${coords.lon + unit}&appid=646bad4630202074bd6e0e37126b3203`, {mode: 'cors'});
       let data = await response.json();
-      console.log(data);
       let forecastObj = process(data);
       let forecastArray = forecastObj.forecastArray;
       let alertArray = forecastObj.alertArray;
@@ -284,7 +283,6 @@ const weather = async (term) => {
         todaysWeather(newWeather);
         alertCheck(alertArray);
         weekElements(newWeather);
-        console.log(forecastObj)
         applyTheme(newWeather);
       } else { 
         errCheck(`That search term was not identified. Please enter a city name or zip code.`); 

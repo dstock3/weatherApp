@@ -1,5 +1,5 @@
 //onecall
-const mockData = `{
+const mockData = {
     "lat": 34.0901,
     "lon": -118.4065,
     "timezone": "America/Los_Angeles",
@@ -1694,6 +1694,6 @@ const mockData = `{
             "uvi": 6
         }
     ]
-}`
+}
 
 export { mockData }
