@@ -343,7 +343,8 @@ const applyTheme = (data) => {
   let head = document.getElementsByClassName("head-container")[0];
   let weather = document.getElementsByClassName("weather-container")[0];
   let forecast = document.getElementsByClassName("forecast-container")[0]; 
-  let warning = document.getElementsByClassName("alerts-container")[0]; 
+  let warning = document.getElementsByClassName("alerts-container")[0];
+
   let themeElements = [head, weather, forecast, warning];
 
   for (let i = 0; i < themeElements.length; i++) {
