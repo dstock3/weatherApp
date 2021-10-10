@@ -11,6 +11,8 @@ const processedData = process(mockData)
 let forecast = processedData.forecastArray;
 let alerts = processedData.alertArray;
 
+console.log(forecast)
+
 test('process returns an object', () => {
     expect(typeof processedData).toBe('object');
 });
@@ -29,4 +31,10 @@ test('forecast array has the appropriate length', () => {
 
 test ('alert array is undefined in the case of no weather alerts', () => {
     expect(alerts).toBe(undefined);
+});
+
+test("forecast array objects have the appropriate properties", () => {
+    for (let i = 0; i < forecast.length; i++) {
+        expect(forecast[i].date).not.toBeNull();
+    };
 });
