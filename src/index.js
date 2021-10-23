@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import './style.css';
 //import 'reset-css';
-
+document.title = "MyWeather";
 const head = document.getElementsByTagName("head")[0];
 const meta = elementBuilder("meta", "meta-tag", head);
 meta.setAttribute("name", "viewport");
@@ -303,7 +303,7 @@ const searchElements = (() => {
   const headContainer = elementBuilder("div", "head-container", body);
 
   const header = elementBuilder("h1", "head", headContainer);
-  header.textContent = "WeatherApp";
+  header.textContent = "MyWeather";
 
   const searchContainer = elementBuilder("div", "search-container", headContainer);
 
