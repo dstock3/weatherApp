@@ -1,0 +1,3 @@
+MyWeather Version 1.0 10/23/2021
+
+MyWeather is a basic weather forecast application that uses the OpenWeather API to display forecast information for a given region. The OpenWeather API serves a multitude of useful weather data for external use based on parameters such as zip code, city name, etc. I carried out this project as part of a broader effort to familiarize myself with application programming interfaces. Notable features include the ability to pull weather alerts based on various search terms. Additionally, the display is dynamically generated based on the forecast data for a particular day. I created the forecast images using Adobe Illustrator.
