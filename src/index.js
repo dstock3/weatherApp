@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './style.css';
-//import 'reset-css';
+import 'reset-css';
 document.title = "MyWeather";
 const head = document.getElementsByTagName("head")[0];
 const meta = elementBuilder("meta", "meta-tag", head);
@@ -39,11 +39,12 @@ const getCity = (data) => {
 };
 
 const images = (() => {
-  const clear = `/src/assets/clear.png`;  
-  const cloudy = `/src/assets/cloudy.png`;
-  const rain = `/src/assets/rain.png`;
-  const search = `/src/assets/search.png`;
-  return { clear, cloudy, rain, search }
+  const clear = { src: `/src/assets/clear.png`, alt: "Clear Weather Graphic" };  
+  const cloudy = { src: `/src/assets/cloudy.png`, alt: "Cloudy Weather Graphic" };
+  const rain = { src: `/src/assets/rain.png`, alt: "Rainy Weather Graphic" };
+  const snow = { src: '/src/assets/snow.png', alt: "Snowy Weather Graphic" };
+  const search = { src: `/src/assets/search.png`, alt: "Magnifying Glass Icon" };
+  return { clear, cloudy, rain, snow, search }
 })();
 
 const imageGen = (weatherData) => {
@@ -53,6 +54,8 @@ const imageGen = (weatherData) => {
       return  images.cloudy
   } else if (weatherData === "rain") {
     return images.rain
+  } else if (weatherData === "snow") {
+    return images.snow
   }
 };
 
@@ -184,7 +187,9 @@ const todaysWeather = (weatherData) => {
 
   let imgContainer = elementBuilder("div", "img-container", subContainer);
   let weatherImg = elementBuilder("img", "weather-img", imgContainer);
-  weatherImg.src = imageGen(today.info);
+  let newImage = imageGen(today.info);
+  weatherImg.src = newImage.src;
+  weatherImg.alt = newImage.alt;
   weatherImg.id = `${today.info}`;
 };
 
@@ -223,7 +228,10 @@ const weekElements = (weatherData) => {
 
     let imgContainer = elementBuilder("div", "img-container", mainContainer);
     let weatherImg = elementBuilder("img", "forecast-img", imgContainer);
-    weatherImg.src = imageGen(day.info);
+    let newImage = imageGen(day.info);
+    weatherImg.src = newImage.src;
+    console.log(weatherImg.src)
+    weatherImg.alt = newImage.alt;
     weatherImg.id = `${day.info}`;
   };
 };
@@ -308,7 +316,7 @@ const searchElements = (() => {
   const searchContainer = elementBuilder("div", "search-container", headContainer);
 
   const searchImg = elementBuilder("img", "search-img", searchContainer);
-  searchImg.src = images.search;
+  searchImg.src = images.search.src;
 
   const searchBar = elementBuilder("input", "search", searchContainer);
   searchBar.setAttribute("type", "text");
