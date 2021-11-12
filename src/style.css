@@ -249,6 +249,17 @@ body {
     background-color: #c0c0c0;
 }
 
+#snow-theme {
+    border: solid 2px #bfd4f7;
+    background-color: #0062ff;
+    box-shadow: 10px 5px 5px #1b202277;
+    color: white;
+}
+
+#snow-accent {
+    background-color: #6fabe2;
+}
+
 @media only screen and (max-width: 600px) {
     body {
         font-size: 1em;
