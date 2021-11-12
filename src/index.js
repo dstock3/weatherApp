@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import './style.css';
-//import 'reset-css';
+import 'reset-css';
 document.title = "MyWeather";
 const head = document.getElementsByTagName("head")[0];
 const meta = elementBuilder("meta", "meta-tag", head);
@@ -42,8 +42,9 @@ const images = (() => {
   const clear = { src: `/src/assets/clear.png`, alt: "Clear Weather Graphic" };  
   const cloudy = { src: `/src/assets/cloudy.png`, alt: "Cloudy Weather Graphic" };
   const rain = { src: `/src/assets/rain.png`, alt: "Rainy Weather Graphic" };
+  const snow = { src: '/src/assets/snow.png', alt: "Snowy Weather Graphic" };
   const search = { src: `/src/assets/search.png`, alt: "Magnifying Glass Icon" };
-  return { clear, cloudy, rain, search }
+  return { clear, cloudy, rain, snow, search }
 })();
 
 const imageGen = (weatherData) => {
@@ -53,6 +54,8 @@ const imageGen = (weatherData) => {
       return  images.cloudy
   } else if (weatherData === "rain") {
     return images.rain
+  } else if (weatherData === "snow") {
+    return images.snow
   }
 };
 
