@@ -1,6 +1,12 @@
 import _ from 'lodash';
 import './style.css';
 import 'reset-css';
+import clearIcon from './assets/clear.png'
+import cloudyIcon from './assets/cloudy.png'
+import rainIcon from './assets/rain.png'
+import snowIcon from './assets/snow.png'
+import searchIcon from './assets/search.png'
+
 document.title = "MyWeather";
 const head = document.getElementsByTagName("head")[0];
 const meta = elementBuilder("meta", "meta-tag", head);
@@ -39,11 +45,11 @@ const getCity = (data) => {
 };
 
 const images = (() => {
-  const clear = { src: `/src/assets/clear.png`, alt: "Clear Weather Graphic" };  
-  const cloudy = { src: `/src/assets/cloudy.png`, alt: "Cloudy Weather Graphic" };
-  const rain = { src: `/src/assets/rain.png`, alt: "Rainy Weather Graphic" };
-  const snow = { src: '/src/assets/snow.png', alt: "Snowy Weather Graphic" };
-  const search = { src: `/src/assets/search.png`, alt: "Magnifying Glass Icon" };
+  const clear = { src: clearIcon, alt: "Clear Weather Graphic" };  
+  const cloudy = { src: cloudyIcon, alt: "Cloudy Weather Graphic" };
+  const rain = { src: rainIcon, alt: "Rainy Weather Graphic" };
+  const snow = { src: snowIcon, alt: "Snowy Weather Graphic" };
+  const search = { src: searchIcon, alt: "Magnifying Glass Icon" };
   return { clear, cloudy, rain, snow, search }
 })();
 
