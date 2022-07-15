@@ -260,6 +260,34 @@ body {
     background-color: #6fabe2;
 }
 
+@keyframes loadingAnimation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-container {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    min-height: 80vh;
+    margin-top: 10%;
+}
+
+.loading {
+    width: 50px;
+    height: 50px;
+    border: 10px solid #00aaff;
+    border-top: 10px solid #002f47;
+    border-radius: 50%;
+    animation: loadingAnimation 1.5s linear infinite;
+}
+
+
 @media only screen and (max-width: 600px) {
     body {
         font-size: 1em;

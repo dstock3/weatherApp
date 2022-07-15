@@ -277,7 +277,14 @@ const getCoords = (data) => {
   };
 };
 
+const spinner = () => {
+  const loadingContainer = elementBuilder("div", "loading-container", body);
+  const loadingSpinner = elementBuilder("div", "loading", loadingContainer);
+  return loadingContainer
+}
+
 const weather = async (term) => {
+  let loadingContainer = spinner()
   let checkedTerm = zipCheck(term);
   let unit = `&units=imperial`;
   try {
@@ -298,18 +305,23 @@ const weather = async (term) => {
         alertCheck(alertArray);
         weekElements(newWeather);
         applyTheme(newWeather);
+        loadingContainer.remove()
       } else { 
-        errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
+        errCheck(`That search term was not identified. Please enter a city name or zip code.`);
+        loadingContainer.remove() 
       };
     } catch (error) {
       if (error == `TypeError: Cannot read properties of undefined (reading 'lat')`) {
-        errCheck(`That search term was not identified. Please enter a city name or zip code.`); 
+        errCheck(`That search term was not identified. Please enter a city name or zip code.`);
+        loadingContainer.remove() 
       } else { 
-        errCheck(error); 
+        errCheck(error);
+        loadingContainer.remove()
       };
     };
   } catch (error) {
     errCheck(error);
+    loadingContainer.remove()
   }
 };
 
